@@ -11,7 +11,8 @@ Stage 1 is complete and green: a single installable package (`agent-foundry`, im
 - CLI `foundry` with four subcommands: `demo` (nine-step story), `verify` (full evidence re-verification incl. independent recomputation of every paired analysis; exit 0/1), `lineage`, `replay` (re-executes a recorded mission and compares output digests; exit 0/1).
 - LangGraph runtime adapter: `foundry.adapters.langgraph_runtime.LangGraphRuntime` (optional dependency group `langgraph`), built on the shared `foundry.runtime.LedgerBackedRuntime` control plane so its canonical event stream is byte-identical to `DeterministicRuntime`'s. `tests/test_runtime_conformance.py` pins every RuntimeAdapter behavior (crash/resume/cancel/duplicate suppression, deterministic reruns, reference equivalence) across all installed runtimes.
 - Executable-test coding domain (report 18.3): `foundry.workers.coding_tasks` (four-role corpus of tiny buggy repos with assertion scripts), `DeterministicCodingWorker` (naive/robust repair strategies, pure), `make_coding_run_arm` (serves open and blind-vault roles), and `foundry.evaluation.DeterministicTestService` (ephemeral workspace, trusted-checks restore so doctored tests buy nothing, command receipts, hard timeout, fail-closed scoring of malformed/path-escaping output). Full paired experiment on run-the-checks evidence in `tests/test_coding_domain.py`; runnable walkthrough in `examples/coding_experiment.py`. See ADR-008.
-- Docs: `README.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md` (ADR-001..008), `docs/ROADMAP.md`, `research/protocols/STAGE1_PROTOCOL.md`, adapter README stubs under `adapters/`.
+- Governed memory (report 11): `foundry.memory.MemoryService` (event-sourced projection; quarantine-first staging, review, provenance-required promotion with no self-promotion, contradiction links, expiry, retrieval feedback, filters-before-match retrieval) and `ContextBuilder` (cited, token-budgeted `ContextPackage`s with warnings and MEMORY_SHOWN events). GOVERNANCE items have no autonomous write path; PROCEDURE items are refused (the bundle registry owns them). `tests/test_memory.py`; ADR-009.
+- Docs: `README.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md` (ADR-001..009), `docs/ROADMAP.md`, `research/protocols/STAGE1_PROTOCOL.md`, adapter README stubs under `adapters/`.
 
 ## Where state lives
 
@@ -24,7 +25,7 @@ Stage 1 is complete and green: a single installable package (`agent-foundry`, im
 ```bash
 cd C:\Users\Jason\RSI
 pip install -e ".[dev,langgraph]"
-python -m pytest -q                          # expect: 396 passed (LangGraph conformance skips without the extra)
+python -m pytest -q                          # expect: 417 passed (LangGraph conformance skips without the extra)
 python -m ruff check src tests examples scripts   # expect: All checks passed!
 foundry demo --root .foundry-demo [--seed N]
 foundry verify --root .foundry-demo
@@ -39,8 +40,8 @@ The capstone suite is `tests/test_e2e_replay.py` (15 tests over a session-scoped
 
 ## What to build next (in rough order)
 
-1. **Memory service** per report section 11 over the existing `MemoryItem`/`ContextPackage` contracts: staging (candidate writes), quarantine, provenance-required promotion, contradiction links, expiry. Write authority is governed; models only propose.
-2. **GEPA/DSPy proposer adapter** in `adapters/optimizers/gepa_dspy/`: consumes ledger evidence, emits typed `ImprovementProposal` objects with `FieldChange` diffs inside the PDP mutation surface. It gets no promotion authority and no vault access, ever.
+1. **GEPA/DSPy proposer adapter** in `adapters/optimizers/gepa_dspy/`: consumes ledger evidence, emits typed `ImprovementProposal` objects with `FieldChange` diffs inside the PDP mutation surface. It gets no promotion authority and no vault access, ever. A deterministic evidence-driven proposer (diagnoser over failure events -> typed proposal) can land first, model-free, as the reference implementation of the same seam.
+2. **Memory extensions** (smaller): model-assisted extraction staging through `MemoryService.stage`, consolidation jobs (11.5), vector/graph projections rebuilt from ledger events, and the privacy deletion/redaction workflow (15.5).
 3. Also open (smaller): the 20+ paired-experiment registered campaign from `research/protocols/STAGE1_PROTOCOL.md`, and an automated event-coverage meter for the 95% exit criterion.
 4. **Real coding agents (OpenHands, mini-SWE-agent)**: seam fully specified by the coding domain (`WorkerLike` + `make_coding_run_arm` + `DeterministicTestService`), but BLOCKED on LLM keys and a real sandbox behind `run_checks` (ADR-008; adapter READMEs state the contract and blockers). Do not run model-generated code under the local-subprocess test service.
 

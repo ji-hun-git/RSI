@@ -75,7 +75,7 @@ Stage 1 intentionally omits, per the report's stage gating:
 |---|---|---|
 | Automatic prompt mutation (GEPA/DSPy proposers) | Human-designed candidates must first demonstrate fair comparison and reliable gates (report 19.6) | `adapters/optimizers/gepa_dspy/`: a proposer emits typed `ImprovementProposal` objects; it never gains promotion authority |
 | Workflow topology search (AFlow-style) | Level-3 mutation surface is empty in Stage 1 (`policy.ALLOWED_MUTATIONS`) | New allowed prefixes plus `/workflow_ref` unlocking in the PDP, only after single-component attribution is reliable |
-| Graph memory / memory learning | Provenance, quarantine and expiry must exist first | A memory service implementing report section 11 over the existing `MemoryItem`/`ContextPackage` contracts |
+| Graph/vector memory projections and model-assisted extraction | Provenance, quarantine and expiry now exist (`foundry.memory`, ADR-009); projections and extractors plug in behind the staged-write API | Extraction workers stage candidates through `MemoryService.stage`; vector/temporal-graph read models rebuild from the same ledger events |
 | Real coding workers (OpenHands, mini-SWE-agent) | Stage-1 experiments need a known ground truth | `adapters/coding/openhands/`, `adapters/coding/mini_swe_agent/` behind `foundry.contracts.WorkerLike` |
 | A2A / agent federation, meta-RSI, module marketplace, strategy-game UI | Out of scope until Stages 3-4 | Not scaffolded on purpose |
 

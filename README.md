@@ -15,6 +15,7 @@ All runtime code lives in `src/foundry/`:
 - `workers/` - two no-model domains behind `WorkerLike`: `FixtureWorker` with the seeded slugify corpus, and `DeterministicCodingWorker` with the executable-test coding corpus (tiny buggy repos plus assertion scripts, four roles, `make_coding_run_arm` wiring)
 - `experiment/` - `ExperimentController` (matched paired design, run, analyze, leakage check), `HoldoutVault` (blind HMAC handles; ground truth never leaves the vault), seeded paired-bootstrap analysis
 - `evaluation/` - deterministic exact-match oracle, the `MetricVector` aggregation harness, and `DeterministicTestService`: an ephemeral-workspace executable-check runner that force-restores the trusted checks file (a worker that doctors the tests is scored against the originals), emits command receipts and scores untrusted output fail-closed
+- `memory/` - governed memory service (report 11): quarantine-first staged writes, provenance-required promotion with no self-promotion, contradiction links, expiry, filters-before-match retrieval, and a `ContextBuilder` producing cited, token-budgeted `ContextPackage`s; state is an event-sourced projection over the ledger
 - `policy/` - fail-closed `PolicyDecisionPoint` (Stage-1 mutation surface: autonomy levels 1-2 only), capability token issuer
 - `promotion/` - the G0-G9 gates as pure functions and the fail-closed `PromotionGate` runner that signs its decisions
 - `deployment/` - event-sourced `DeploymentController`: canary before scoped production, signed-decision and signed-bundle verification, rollback to the recorded parent
@@ -25,7 +26,7 @@ All runtime code lives in `src/foundry/`:
 
 ```bash
 pip install -e ".[dev,langgraph]"    # drop the langgraph extra for the dependency-free core
-python -m pytest                      # 396 tests (LangGraph conformance skips without the extra)
+python -m pytest                      # 417 tests (LangGraph conformance skips without the extra)
 foundry demo --root .foundry-demo    # run the complete Stage-1 story
 foundry verify --root .foundry-demo  # re-verify all evidence (exit 0/1)
 foundry lineage --root .foundry-demo # print the bundle tree
@@ -63,7 +64,7 @@ These are report section 8.1 rules implemented as code paths, not conventions, a
 ```
 RSI/
 ├── src/foundry/          # the Stage-1 packages listed above
-├── tests/                # 396 tests, including tests/test_e2e_replay.py (capstone)
+├── tests/                # 417 tests, including tests/test_e2e_replay.py (capstone)
 ├── schemas/              # exported JSON Schemas (scripts/export_schemas.py)
 ├── examples/quickstart.py
 ├── scripts/export_schemas.py

@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "field_path": {
+      "title": "Field Path",
+      "type": "string"
+    },
+    "module_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Module Id"
+    }
+  },
+  "required": [
+    "field_path"
+  ],
+  "title": "ChangeTarget",
+  "type": "object"
+}

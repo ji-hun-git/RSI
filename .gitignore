@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ruff_cache/
+build/
+dist/
+# Local runtime state (ledger DBs, artifact stores, dev keys) -- never commit evidence roots
+.foundry*/
+*.db
+*.sqlite3
+.DS_Store
+Thumbs.db

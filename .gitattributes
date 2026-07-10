@@ -1,0 +1,4 @@
+# The exported JSON Schemas are a byte-stable interchange layer: their
+# digests must be identical on every platform, so git must never rewrite
+# their line endings (see scripts/export_schemas.py).
+schemas/*.json text eol=lf

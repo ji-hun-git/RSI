@@ -1,0 +1,73 @@
+{
+  "properties": {
+    "activated_at": {
+      "format": "date-time",
+      "title": "Activated At",
+      "type": "string"
+    },
+    "active": {
+      "default": true,
+      "title": "Active",
+      "type": "boolean"
+    },
+    "bundle_id": {
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "decision_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Decision Id"
+    },
+    "deployment_id": {
+      "title": "Deployment Id",
+      "type": "string"
+    },
+    "mode": {
+      "default": "scoped_production",
+      "title": "Mode",
+      "type": "string"
+    },
+    "monitoring_window_missions": {
+      "default": 50,
+      "title": "Monitoring Window Missions",
+      "type": "integer"
+    },
+    "parent_bundle_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Bundle Id"
+    },
+    "rollback_triggers": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Rollback Triggers",
+      "type": "array"
+    },
+    "scope": {
+      "additionalProperties": true,
+      "title": "Scope",
+      "type": "object"
+    }
+  },
+  "required": [
+    "bundle_id"
+  ],
+  "title": "DeploymentRecord",
+  "type": "object"
+}

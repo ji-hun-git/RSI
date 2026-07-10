@@ -1,0 +1,243 @@
+{
+  "$defs": {
+    "AutonomyLevel": {
+      "description": "Mutable-surface levels (report section 8.4). Stage 1 permits 0-2.",
+      "enum": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "title": "AutonomyLevel",
+      "type": "integer"
+    },
+    "ChangeTarget": {
+      "properties": {
+        "field_path": {
+          "title": "Field Path",
+          "type": "string"
+        },
+        "module_id": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Module Id"
+        }
+      },
+      "required": [
+        "field_path"
+      ],
+      "title": "ChangeTarget",
+      "type": "object"
+    },
+    "DeploymentScope": {
+      "properties": {
+        "percent": {
+          "default": 100.0,
+          "title": "Percent",
+          "type": "number"
+        },
+        "projects": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Projects",
+          "type": "array"
+        },
+        "task_types": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Task Types",
+          "type": "array"
+        }
+      },
+      "title": "DeploymentScope",
+      "type": "object"
+    },
+    "FieldChange": {
+      "properties": {
+        "field_path": {
+          "title": "Field Path",
+          "type": "string"
+        },
+        "new_value": {
+          "default": null,
+          "title": "New Value"
+        },
+        "old_value": {
+          "default": null,
+          "title": "Old Value"
+        }
+      },
+      "required": [
+        "field_path"
+      ],
+      "title": "FieldChange",
+      "type": "object"
+    },
+    "ModuleRef": {
+      "properties": {
+        "digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Digest"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "default": "0.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "ModuleRef",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "autonomy_level": {
+      "$ref": "#/$defs/AutonomyLevel",
+      "default": 2
+    },
+    "changes": {
+      "items": {
+        "$ref": "#/$defs/FieldChange"
+      },
+      "title": "Changes",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "current_behavior": {
+      "default": "",
+      "title": "Current Behavior",
+      "type": "string"
+    },
+    "deployment_scope": {
+      "$ref": "#/$defs/DeploymentScope"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "expected_effects": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Expected Effects",
+      "type": "object"
+    },
+    "experiment_plan_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Experiment Plan Ref"
+    },
+    "hypothesis": {
+      "title": "Hypothesis",
+      "type": "string"
+    },
+    "minimum_practical_effect": {
+      "default": 0.0,
+      "title": "Minimum Practical Effect",
+      "type": "number"
+    },
+    "parent_bundle_id": {
+      "title": "Parent Bundle Id",
+      "type": "string"
+    },
+    "proposal_id": {
+      "title": "Proposal Id",
+      "type": "string"
+    },
+    "proposer": {
+      "$ref": "#/$defs/ModuleRef"
+    },
+    "retention_floor": {
+      "default": 0.0,
+      "title": "Retention Floor",
+      "type": "number"
+    },
+    "retention_set_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Retention Set Ref"
+    },
+    "risks": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Risks",
+      "type": "array"
+    },
+    "rollback_condition": {
+      "default": "",
+      "title": "Rollback Condition",
+      "type": "string"
+    },
+    "secondary_hypotheses": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Secondary Hypotheses",
+      "type": "array"
+    },
+    "subgroup_floors": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Subgroup Floors",
+      "type": "object"
+    },
+    "target": {
+      "$ref": "#/$defs/ChangeTarget"
+    }
+  },
+  "required": [
+    "parent_bundle_id",
+    "target",
+    "hypothesis"
+  ],
+  "title": "ImprovementProposal",
+  "type": "object"
+}

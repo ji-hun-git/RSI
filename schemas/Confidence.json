@@ -1,0 +1,16 @@
+{
+  "properties": {
+    "method": {
+      "default": "unspecified",
+      "title": "Method",
+      "type": "string"
+    },
+    "value": {
+      "default": 0.5,
+      "title": "Value",
+      "type": "number"
+    }
+  },
+  "title": "Confidence",
+  "type": "object"
+}

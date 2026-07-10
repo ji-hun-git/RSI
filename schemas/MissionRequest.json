@@ -1,0 +1,68 @@
+{
+  "$defs": {
+    "OperatingProfile": {
+      "description": "Deployment profiles (report section 9.5).",
+      "enum": [
+        "research",
+        "high_reliability",
+        "low_cost",
+        "fast_response",
+        "experimental"
+      ],
+      "title": "OperatingProfile",
+      "type": "string"
+    },
+    "RiskClass": {
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "critical"
+      ],
+      "title": "RiskClass",
+      "type": "string"
+    }
+  },
+  "description": "The raw, pre-compilation human request. Mutable field bag by design.",
+  "properties": {
+    "description": {
+      "default": "",
+      "title": "Description",
+      "type": "string"
+    },
+    "inputs": {
+      "additionalProperties": true,
+      "title": "Inputs",
+      "type": "object"
+    },
+    "operating_profile": {
+      "$ref": "#/$defs/OperatingProfile",
+      "default": "research"
+    },
+    "project_id": {
+      "default": "proj_default",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "request_id": {
+      "title": "Request Id",
+      "type": "string"
+    },
+    "requested_by": {
+      "default": "human:owner",
+      "title": "Requested By",
+      "type": "string"
+    },
+    "risk_class": {
+      "$ref": "#/$defs/RiskClass",
+      "default": "low"
+    },
+    "task_type": {
+      "default": "software.fixture",
+      "title": "Task Type",
+      "type": "string"
+    }
+  },
+  "title": "MissionRequest",
+  "type": "object"
+}

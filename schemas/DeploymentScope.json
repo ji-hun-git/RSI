@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "percent": {
+      "default": 100.0,
+      "title": "Percent",
+      "type": "number"
+    },
+    "projects": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Projects",
+      "type": "array"
+    },
+    "task_types": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Task Types",
+      "type": "array"
+    }
+  },
+  "title": "DeploymentScope",
+  "type": "object"
+}

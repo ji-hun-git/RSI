@@ -1,0 +1,38 @@
+{
+  "description": "Integrity block of report 17.4: digest of the result plus signature.\n\nEvaluation records are decision evidence (report 17.5), so they carry\ntheir own tamper-evidence: ``digest`` covers every field except this\nblock, ``signature`` is the producing evaluator's signature over it.",
+  "properties": {
+    "digest": {
+      "title": "Digest",
+      "type": "string"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Signature"
+    },
+    "signer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Signer"
+    }
+  },
+  "required": [
+    "digest"
+  ],
+  "title": "ResultIntegrity",
+  "type": "object"
+}

@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "field_path": {
+      "title": "Field Path",
+      "type": "string"
+    },
+    "new_value": {
+      "default": null,
+      "title": "New Value"
+    },
+    "old_value": {
+      "default": null,
+      "title": "Old Value"
+    }
+  },
+  "required": [
+    "field_path"
+  ],
+  "title": "FieldChange",
+  "type": "object"
+}

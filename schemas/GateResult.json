@@ -1,0 +1,53 @@
+{
+  "$defs": {
+    "GateId": {
+      "description": "Promotion gate sequence (report section 13.1).",
+      "enum": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9"
+      ],
+      "title": "GateId",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "detail": {
+      "additionalProperties": true,
+      "title": "Detail",
+      "type": "object"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "gate": {
+      "$ref": "#/$defs/GateId"
+    },
+    "passed": {
+      "title": "Passed",
+      "type": "boolean"
+    },
+    "reason": {
+      "default": "",
+      "title": "Reason",
+      "type": "string"
+    }
+  },
+  "required": [
+    "gate",
+    "passed"
+  ],
+  "title": "GateResult",
+  "type": "object"
+}

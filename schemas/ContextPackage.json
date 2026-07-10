@@ -1,0 +1,161 @@
+{
+  "$defs": {
+    "Confidence": {
+      "properties": {
+        "method": {
+          "default": "unspecified",
+          "title": "Method",
+          "type": "string"
+        },
+        "value": {
+          "default": 0.5,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "title": "Confidence",
+      "type": "object"
+    },
+    "EvidenceItem": {
+      "properties": {
+        "confidence": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Confidence"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        },
+        "excerpt": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Excerpt"
+        },
+        "ref": {
+          "title": "Ref",
+          "type": "string"
+        },
+        "source": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/SourceRef"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null
+        }
+      },
+      "required": [
+        "ref"
+      ],
+      "title": "EvidenceItem",
+      "type": "object"
+    },
+    "SourceRef": {
+      "properties": {
+        "artifact_ref": {
+          "title": "Artifact Ref",
+          "type": "string"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        }
+      },
+      "required": [
+        "artifact_ref"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    }
+  },
+  "description": "The exact, cited, budgeted evidence set supplied to one module call.",
+  "properties": {
+    "evidence_items": {
+      "items": {
+        "$ref": "#/$defs/EvidenceItem"
+      },
+      "title": "Evidence Items",
+      "type": "array"
+    },
+    "freshness": {
+      "additionalProperties": true,
+      "title": "Freshness",
+      "type": "object"
+    },
+    "information_need": {
+      "additionalProperties": true,
+      "title": "Information Need",
+      "type": "object"
+    },
+    "mission_id": {
+      "title": "Mission Id",
+      "type": "string"
+    },
+    "node_id": {
+      "title": "Node Id",
+      "type": "string"
+    },
+    "package_id": {
+      "title": "Package Id",
+      "type": "string"
+    },
+    "procedures": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Procedures",
+      "type": "array"
+    },
+    "retrieval_trace": {
+      "additionalProperties": true,
+      "title": "Retrieval Trace",
+      "type": "object"
+    },
+    "token_allocation": {
+      "additionalProperties": {
+        "type": "integer"
+      },
+      "title": "Token Allocation",
+      "type": "object"
+    },
+    "version": {
+      "default": "1.0.0",
+      "title": "Version",
+      "type": "string"
+    },
+    "warnings": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Warnings",
+      "type": "array"
+    }
+  },
+  "required": [
+    "mission_id",
+    "node_id"
+  ],
+  "title": "ContextPackage",
+  "type": "object"
+}

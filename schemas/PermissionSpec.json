@@ -1,0 +1,49 @@
+{
+  "properties": {
+    "external_side_effects": {
+      "default": false,
+      "title": "External Side Effects",
+      "type": "boolean"
+    },
+    "filesystem_read": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Filesystem Read",
+      "type": "array"
+    },
+    "filesystem_write": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Filesystem Write",
+      "type": "array"
+    },
+    "network_allow": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Network Allow",
+      "type": "array"
+    },
+    "network_mode": {
+      "default": "deny_by_default",
+      "title": "Network Mode",
+      "type": "string"
+    },
+    "permission_inheritance": {
+      "default": "narrower_only",
+      "title": "Permission Inheritance",
+      "type": "string"
+    },
+    "secret_classes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Secret Classes",
+      "type": "array"
+    }
+  },
+  "title": "PermissionSpec",
+  "type": "object"
+}

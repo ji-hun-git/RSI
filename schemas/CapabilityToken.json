@@ -1,0 +1,64 @@
+{
+  "description": "Short-lived, scoped, non-transferable authorization grant (report 14).",
+  "properties": {
+    "actions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Actions",
+      "type": "array"
+    },
+    "capability_id": {
+      "title": "Capability Id",
+      "type": "string"
+    },
+    "issued_at": {
+      "format": "date-time",
+      "title": "Issued At",
+      "type": "string"
+    },
+    "issuer": {
+      "default": "capability-issuer",
+      "title": "Issuer",
+      "type": "string"
+    },
+    "mission_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Mission Id"
+    },
+    "resource_scopes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Resource Scopes",
+      "type": "array"
+    },
+    "subject": {
+      "title": "Subject",
+      "type": "string"
+    },
+    "transferable": {
+      "default": false,
+      "title": "Transferable",
+      "type": "boolean"
+    },
+    "ttl_seconds": {
+      "default": 900,
+      "title": "Ttl Seconds",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "subject"
+  ],
+  "title": "CapabilityToken",
+  "type": "object"
+}

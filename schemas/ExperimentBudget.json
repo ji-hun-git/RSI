@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "equalized": {
+      "default": true,
+      "title": "Equalized",
+      "type": "boolean"
+    },
+    "max_runs": {
+      "default": 200,
+      "title": "Max Runs",
+      "type": "integer"
+    },
+    "per_arm_cost_usd": {
+      "default": 100.0,
+      "title": "Per Arm Cost Usd",
+      "type": "number"
+    }
+  },
+  "title": "ExperimentBudget",
+  "type": "object"
+}

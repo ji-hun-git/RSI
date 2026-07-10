@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "high": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "High"
+    },
+    "kind": {
+      "default": "point",
+      "title": "Kind",
+      "type": "string"
+    },
+    "low": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Low"
+    }
+  },
+  "title": "Uncertainty",
+  "type": "object"
+}

@@ -1,0 +1,263 @@
+{
+  "$defs": {
+    "Confidence": {
+      "properties": {
+        "method": {
+          "default": "unspecified",
+          "title": "Method",
+          "type": "string"
+        },
+        "value": {
+          "default": 0.5,
+          "title": "Value",
+          "type": "number"
+        }
+      },
+      "title": "Confidence",
+      "type": "object"
+    },
+    "MemoryLink": {
+      "description": "Directed supporting/contradicting evidence link (report 11.2).\n\nCarries the extraction method and a span/locator so the link can be\naudited back to the exact evidence region, not just a bare reference.",
+      "properties": {
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        },
+        "method": {
+          "default": "unspecified",
+          "title": "Method",
+          "type": "string"
+        },
+        "target_ref": {
+          "title": "Target Ref",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_ref"
+      ],
+      "title": "MemoryLink",
+      "type": "object"
+    },
+    "MemoryType": {
+      "description": "Typed memory layers (report section 11.1).",
+      "enum": [
+        "source",
+        "episode",
+        "semantic_claim",
+        "procedure",
+        "evaluation",
+        "negative",
+        "governance"
+      ],
+      "title": "MemoryType",
+      "type": "string"
+    },
+    "SecurityClass": {
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted",
+        "secret_reference_only"
+      ],
+      "title": "SecurityClass",
+      "type": "string"
+    },
+    "SourceRef": {
+      "properties": {
+        "artifact_ref": {
+          "title": "Artifact Ref",
+          "type": "string"
+        },
+        "locator": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Locator"
+        }
+      },
+      "required": [
+        "artifact_ref"
+      ],
+      "title": "SourceRef",
+      "type": "object"
+    },
+    "VerificationStatus": {
+      "description": "Memory verification statuses (report section 11.2).",
+      "enum": [
+        "unverified",
+        "corroborated",
+        "contradicted",
+        "human_confirmed",
+        "experimentally_supported",
+        "deprecated"
+      ],
+      "title": "VerificationStatus",
+      "type": "string"
+    }
+  },
+  "description": "Universal memory item (report 11.2).\n\n``created_at`` is the record time and ``observed_at`` the event time;\nthe two are kept distinct by contract. ``read_scope``/``write_scope``\ncarry the per-item project/role/capability requirements evaluated by\nthe 11.4 retrieval filters, and ``quality_evidence`` accumulates\nretrieval-usefulness and harmful-use observations.",
+  "properties": {
+    "applicability": {
+      "additionalProperties": {
+        "items": {
+          "type": "string"
+        },
+        "type": "array"
+      },
+      "title": "Applicability",
+      "type": "object"
+    },
+    "author": {
+      "default": "system",
+      "title": "Author",
+      "type": "string"
+    },
+    "confidence": {
+      "$ref": "#/$defs/Confidence"
+    },
+    "content": {
+      "additionalProperties": true,
+      "title": "Content",
+      "type": "object"
+    },
+    "contradicting_refs": {
+      "items": {
+        "$ref": "#/$defs/MemoryLink"
+      },
+      "title": "Contradicting Refs",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "expiration_policy": {
+      "additionalProperties": true,
+      "title": "Expiration Policy",
+      "type": "object"
+    },
+    "is_hypothesis": {
+      "default": false,
+      "title": "Is Hypothesis",
+      "type": "boolean"
+    },
+    "lineage": {
+      "additionalProperties": true,
+      "title": "Lineage",
+      "type": "object"
+    },
+    "memory_id": {
+      "title": "Memory Id",
+      "type": "string"
+    },
+    "memory_type": {
+      "$ref": "#/$defs/MemoryType"
+    },
+    "observed_at": {
+      "format": "date-time",
+      "title": "Observed At",
+      "type": "string"
+    },
+    "quality_evidence": {
+      "additionalProperties": true,
+      "title": "Quality Evidence",
+      "type": "object"
+    },
+    "read_scope": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Read Scope",
+      "type": "array"
+    },
+    "reviewer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reviewer"
+    },
+    "security_class": {
+      "$ref": "#/$defs/SecurityClass",
+      "default": "internal"
+    },
+    "source_refs": {
+      "items": {
+        "$ref": "#/$defs/SourceRef"
+      },
+      "title": "Source Refs",
+      "type": "array"
+    },
+    "supporting_refs": {
+      "items": {
+        "$ref": "#/$defs/MemoryLink"
+      },
+      "title": "Supporting Refs",
+      "type": "array"
+    },
+    "valid_from": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Valid From"
+    },
+    "valid_to": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Valid To"
+    },
+    "verification_status": {
+      "$ref": "#/$defs/VerificationStatus",
+      "default": "unverified"
+    },
+    "write_scope": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Write Scope",
+      "type": "array"
+    }
+  },
+  "required": [
+    "memory_type"
+  ],
+  "title": "MemoryItem",
+  "type": "object"
+}

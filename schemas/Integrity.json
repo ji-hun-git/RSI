@@ -1,0 +1,48 @@
+{
+  "description": "Filled in by the ledger; producer signature over the event digest.",
+  "properties": {
+    "digest": {
+      "title": "Digest",
+      "type": "string"
+    },
+    "prev_digest": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Prev Digest"
+    },
+    "producer": {
+      "title": "Producer",
+      "type": "string"
+    },
+    "sequence": {
+      "title": "Sequence",
+      "type": "integer"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Signature"
+    }
+  },
+  "required": [
+    "producer",
+    "digest",
+    "sequence"
+  ],
+  "title": "Integrity",
+  "type": "object"
+}

@@ -1,0 +1,213 @@
+{
+  "$defs": {
+    "ExperimentArm": {
+      "properties": {
+        "arm_id": {
+          "title": "Arm Id",
+          "type": "string"
+        },
+        "bundle_id": {
+          "title": "Bundle Id",
+          "type": "string"
+        },
+        "is_control": {
+          "default": false,
+          "title": "Is Control",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "arm_id",
+        "bundle_id"
+      ],
+      "title": "ExperimentArm",
+      "type": "object"
+    },
+    "ExperimentBudget": {
+      "properties": {
+        "equalized": {
+          "default": true,
+          "title": "Equalized",
+          "type": "boolean"
+        },
+        "max_runs": {
+          "default": 200,
+          "title": "Max Runs",
+          "type": "integer"
+        },
+        "per_arm_cost_usd": {
+          "default": 100.0,
+          "title": "Per Arm Cost Usd",
+          "type": "number"
+        }
+      },
+      "title": "ExperimentBudget",
+      "type": "object"
+    },
+    "Randomization": {
+      "properties": {
+        "paired": {
+          "default": true,
+          "title": "Paired",
+          "type": "boolean"
+        },
+        "seed": {
+          "default": 0,
+          "title": "Seed",
+          "type": "integer"
+        },
+        "unit": {
+          "default": "task",
+          "title": "Unit",
+          "type": "string"
+        }
+      },
+      "title": "Randomization",
+      "type": "object"
+    },
+    "TaskSetRefs": {
+      "properties": {
+        "adversarial": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Adversarial"
+        },
+        "development": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Development"
+        },
+        "protected": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Protected"
+        },
+        "retention": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Retention"
+        }
+      },
+      "title": "TaskSetRefs",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "analysis_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Analysis Ref"
+    },
+    "arms": {
+      "items": {
+        "$ref": "#/$defs/ExperimentArm"
+      },
+      "title": "Arms",
+      "type": "array"
+    },
+    "budgets": {
+      "$ref": "#/$defs/ExperimentBudget"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "decision_rule_ref": {
+      "default": "policy://promotion/stage1-v1",
+      "title": "Decision Rule Ref",
+      "type": "string"
+    },
+    "experiment_id": {
+      "title": "Experiment Id",
+      "type": "string"
+    },
+    "minimum_practical_effect": {
+      "default": 0.0,
+      "title": "Minimum Practical Effect",
+      "type": "number"
+    },
+    "preregistration_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Preregistration Ref"
+    },
+    "primary_endpoint": {
+      "default": "paired_task_success_delta",
+      "title": "Primary Endpoint",
+      "type": "string"
+    },
+    "proposal_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Proposal Id"
+    },
+    "protocol_version": {
+      "default": "1.0.0",
+      "title": "Protocol Version",
+      "type": "string"
+    },
+    "randomization": {
+      "$ref": "#/$defs/Randomization"
+    },
+    "status": {
+      "default": "designed",
+      "title": "Status",
+      "type": "string"
+    },
+    "task_sets": {
+      "$ref": "#/$defs/TaskSetRefs"
+    }
+  },
+  "title": "ExperimentRecord",
+  "type": "object"
+}

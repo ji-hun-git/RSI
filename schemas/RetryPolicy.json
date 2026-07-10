@@ -1,0 +1,18 @@
+{
+  "properties": {
+    "max_attempts": {
+      "default": 2,
+      "title": "Max Attempts",
+      "type": "integer"
+    },
+    "retryable_errors": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Retryable Errors",
+      "type": "array"
+    }
+  },
+  "title": "RetryPolicy",
+  "type": "object"
+}

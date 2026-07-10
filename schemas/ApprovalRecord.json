@@ -1,0 +1,61 @@
+{
+  "$defs": {
+    "ApprovalTier": {
+      "description": "Human approval tiers (report section 14.5).",
+      "enum": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "title": "ApprovalTier",
+      "type": "string"
+    }
+  },
+  "description": "A human approval binds an identity to an exact candidate digest and scope.",
+  "properties": {
+    "approval_id": {
+      "title": "Approval Id",
+      "type": "string"
+    },
+    "approved_at": {
+      "format": "date-time",
+      "title": "Approved At",
+      "type": "string"
+    },
+    "approver": {
+      "title": "Approver",
+      "type": "string"
+    },
+    "candidate_bundle_id": {
+      "title": "Candidate Bundle Id",
+      "type": "string"
+    },
+    "decision": {
+      "default": "approved",
+      "title": "Decision",
+      "type": "string"
+    },
+    "rationale": {
+      "default": "",
+      "title": "Rationale",
+      "type": "string"
+    },
+    "scope": {
+      "additionalProperties": true,
+      "title": "Scope",
+      "type": "object"
+    },
+    "tier": {
+      "$ref": "#/$defs/ApprovalTier"
+    }
+  },
+  "required": [
+    "approver",
+    "tier",
+    "candidate_bundle_id"
+  ],
+  "title": "ApprovalRecord",
+  "type": "object"
+}

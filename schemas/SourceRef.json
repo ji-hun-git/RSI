@@ -1,0 +1,25 @@
+{
+  "properties": {
+    "artifact_ref": {
+      "title": "Artifact Ref",
+      "type": "string"
+    },
+    "locator": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Locator"
+    }
+  },
+  "required": [
+    "artifact_ref"
+  ],
+  "title": "SourceRef",
+  "type": "object"
+}

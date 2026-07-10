@@ -1,0 +1,31 @@
+{
+  "description": "Directed supporting/contradicting evidence link (report 11.2).\n\nCarries the extraction method and a span/locator so the link can be\naudited back to the exact evidence region, not just a bare reference.",
+  "properties": {
+    "locator": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Locator"
+    },
+    "method": {
+      "default": "unspecified",
+      "title": "Method",
+      "type": "string"
+    },
+    "target_ref": {
+      "title": "Target Ref",
+      "type": "string"
+    }
+  },
+  "required": [
+    "target_ref"
+  ],
+  "title": "MemoryLink",
+  "type": "object"
+}

@@ -1,0 +1,37 @@
+{
+  "properties": {
+    "from_bundle_id": {
+      "title": "From Bundle Id",
+      "type": "string"
+    },
+    "initiated_by": {
+      "default": "system",
+      "title": "Initiated By",
+      "type": "string"
+    },
+    "rollback_id": {
+      "title": "Rollback Id",
+      "type": "string"
+    },
+    "rolled_back_at": {
+      "format": "date-time",
+      "title": "Rolled Back At",
+      "type": "string"
+    },
+    "to_bundle_id": {
+      "title": "To Bundle Id",
+      "type": "string"
+    },
+    "trigger": {
+      "title": "Trigger",
+      "type": "string"
+    }
+  },
+  "required": [
+    "from_bundle_id",
+    "to_bundle_id",
+    "trigger"
+  ],
+  "title": "RollbackRecord",
+  "type": "object"
+}

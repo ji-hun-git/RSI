@@ -1,0 +1,26 @@
+{
+  "properties": {
+    "max_cost_usd": {
+      "default": 10.0,
+      "title": "Max Cost Usd",
+      "type": "number"
+    },
+    "max_output_tokens": {
+      "default": 50000,
+      "title": "Max Output Tokens",
+      "type": "integer"
+    },
+    "max_tool_calls": {
+      "default": 200,
+      "title": "Max Tool Calls",
+      "type": "integer"
+    },
+    "max_wall_seconds": {
+      "default": 3600,
+      "title": "Max Wall Seconds",
+      "type": "integer"
+    }
+  },
+  "title": "ResourceBudget",
+  "type": "object"
+}

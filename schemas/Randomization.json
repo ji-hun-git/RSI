@@ -1,0 +1,21 @@
+{
+  "properties": {
+    "paired": {
+      "default": true,
+      "title": "Paired",
+      "type": "boolean"
+    },
+    "seed": {
+      "default": 0,
+      "title": "Seed",
+      "type": "integer"
+    },
+    "unit": {
+      "default": "task",
+      "title": "Unit",
+      "type": "string"
+    }
+  },
+  "title": "Randomization",
+  "type": "object"
+}

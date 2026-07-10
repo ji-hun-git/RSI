@@ -1,0 +1,215 @@
+{
+  "$defs": {
+    "ModuleRef": {
+      "properties": {
+        "digest": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Digest"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "version": {
+          "default": "0.0.0",
+          "title": "Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id"
+      ],
+      "title": "ModuleRef",
+      "type": "object"
+    },
+    "ResultIntegrity": {
+      "description": "Integrity block of report 17.4: digest of the result plus signature.\n\nEvaluation records are decision evidence (report 17.5), so they carry\ntheir own tamper-evidence: ``digest`` covers every field except this\nblock, ``signature`` is the producing evaluator's signature over it.",
+      "properties": {
+        "digest": {
+          "title": "Digest",
+          "type": "string"
+        },
+        "signature": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signature"
+        },
+        "signer": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Signer"
+        }
+      },
+      "required": [
+        "digest"
+      ],
+      "title": "ResultIntegrity",
+      "type": "object"
+    },
+    "Uncertainty": {
+      "properties": {
+        "high": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "High"
+        },
+        "kind": {
+          "default": "point",
+          "title": "Kind",
+          "type": "string"
+        },
+        "low": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Low"
+        }
+      },
+      "title": "Uncertainty",
+      "type": "object"
+    }
+  },
+  "properties": {
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "dataset_item_handle": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Dataset Item Handle"
+    },
+    "detail": {
+      "additionalProperties": true,
+      "title": "Detail",
+      "type": "object"
+    },
+    "evaluation_id": {
+      "title": "Evaluation Id",
+      "type": "string"
+    },
+    "evaluator": {
+      "$ref": "#/$defs/ModuleRef"
+    },
+    "evidence_refs": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Evidence Refs",
+      "type": "array"
+    },
+    "integrity": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/ResultIntegrity"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
+    },
+    "judge_output_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Judge Output Ref"
+    },
+    "metric": {
+      "title": "Metric",
+      "type": "string"
+    },
+    "status": {
+      "default": "valid",
+      "title": "Status",
+      "type": "string"
+    },
+    "subgroups": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Subgroups",
+      "type": "object"
+    },
+    "subject_bundle_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Subject Bundle Id"
+    },
+    "subject_run_id": {
+      "title": "Subject Run Id",
+      "type": "string"
+    },
+    "uncertainty": {
+      "$ref": "#/$defs/Uncertainty"
+    },
+    "value": {
+      "title": "Value",
+      "type": "number"
+    }
+  },
+  "required": [
+    "subject_run_id",
+    "evaluator",
+    "metric",
+    "value"
+  ],
+  "title": "EvaluationResult",
+  "type": "object"
+}

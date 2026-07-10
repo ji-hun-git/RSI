@@ -1,0 +1,33 @@
+{
+  "properties": {
+    "algorithm": {
+      "default": "hmac-sha256",
+      "title": "Algorithm",
+      "type": "string"
+    },
+    "role": {
+      "default": "author",
+      "title": "Role",
+      "type": "string"
+    },
+    "signature": {
+      "title": "Signature",
+      "type": "string"
+    },
+    "signed_at": {
+      "format": "date-time",
+      "title": "Signed At",
+      "type": "string"
+    },
+    "signer": {
+      "title": "Signer",
+      "type": "string"
+    }
+  },
+  "required": [
+    "signer",
+    "signature"
+  ],
+  "title": "SignatureRecord",
+  "type": "object"
+}

@@ -1,0 +1,31 @@
+{
+  "description": "An acceptance criterion names a deterministic oracle where possible.",
+  "properties": {
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "oracle": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Oracle"
+    },
+    "text": {
+      "title": "Text",
+      "type": "string"
+    }
+  },
+  "required": [
+    "id",
+    "text"
+  ],
+  "title": "AcceptanceCriterion",
+  "type": "object"
+}

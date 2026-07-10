@@ -1,0 +1,209 @@
+{
+  "$defs": {
+    "ApprovalTier": {
+      "description": "Human approval tiers (report section 14.5).",
+      "enum": [
+        "A0",
+        "A1",
+        "A2",
+        "A3",
+        "A4"
+      ],
+      "title": "ApprovalTier",
+      "type": "string"
+    },
+    "DecisionAction": {
+      "description": "Terminal actions of the promotion gate (report sections 12.2, 13.1).",
+      "enum": [
+        "reject",
+        "quarantine",
+        "retest",
+        "canary",
+        "promote"
+      ],
+      "title": "DecisionAction",
+      "type": "string"
+    },
+    "GateId": {
+      "description": "Promotion gate sequence (report section 13.1).",
+      "enum": [
+        "G0",
+        "G1",
+        "G2",
+        "G3",
+        "G4",
+        "G5",
+        "G6",
+        "G7",
+        "G8",
+        "G9"
+      ],
+      "title": "GateId",
+      "type": "string"
+    },
+    "GateResult": {
+      "properties": {
+        "detail": {
+          "additionalProperties": true,
+          "title": "Detail",
+          "type": "object"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Refs",
+          "type": "array"
+        },
+        "gate": {
+          "$ref": "#/$defs/GateId"
+        },
+        "passed": {
+          "title": "Passed",
+          "type": "boolean"
+        },
+        "reason": {
+          "default": "",
+          "title": "Reason",
+          "type": "string"
+        }
+      },
+      "required": [
+        "gate",
+        "passed"
+      ],
+      "title": "GateResult",
+      "type": "object"
+    }
+  },
+  "description": "Produced only by the deterministic promotion gate (report 13.3).\n\n``signer``/``signature`` bind the decision to the gate that produced\nit: the gate signs the canonical JSON of :meth:`signable_payload`, so\na hand-built or field-tampered decision cannot pass the deployment\ntrust boundary. ``proposer`` records the proposing principal so the\nno-self-approval rule (report 8.1) is enforceable at deploy time.",
+  "properties": {
+    "action": {
+      "$ref": "#/$defs/DecisionAction"
+    },
+    "approvals": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Approvals",
+      "type": "array"
+    },
+    "candidate_bundle_id": {
+      "title": "Candidate Bundle Id",
+      "type": "string"
+    },
+    "decided_at": {
+      "format": "date-time",
+      "title": "Decided At",
+      "type": "string"
+    },
+    "decision_id": {
+      "title": "Decision Id",
+      "type": "string"
+    },
+    "experiment_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Experiment Id"
+    },
+    "gate_results": {
+      "items": {
+        "$ref": "#/$defs/GateResult"
+      },
+      "title": "Gate Results",
+      "type": "array"
+    },
+    "parent_bundle_id": {
+      "title": "Parent Bundle Id",
+      "type": "string"
+    },
+    "proposal_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Proposal Id"
+    },
+    "proposer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Proposer"
+    },
+    "reason": {
+      "default": "",
+      "title": "Reason",
+      "type": "string"
+    },
+    "required_approval_tier": {
+      "$ref": "#/$defs/ApprovalTier"
+    },
+    "rollback_target": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rollback Target"
+    },
+    "scope": {
+      "additionalProperties": true,
+      "title": "Scope",
+      "type": "object"
+    },
+    "signature": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Signature"
+    },
+    "signer": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Signer"
+    }
+  },
+  "required": [
+    "candidate_bundle_id",
+    "parent_bundle_id",
+    "action",
+    "required_approval_tier"
+  ],
+  "title": "PromotionDecision",
+  "type": "object"
+}

@@ -1,0 +1,83 @@
+{
+  "$defs": {
+    "TaskSetRole": {
+      "description": "Task-set roles inside an experiment (report section 17.4).",
+      "enum": [
+        "development",
+        "protected",
+        "retention",
+        "adversarial"
+      ],
+      "title": "TaskSetRole",
+      "type": "string"
+    }
+  },
+  "description": "Result of a paired candidate-vs-control comparison on one task set.",
+  "properties": {
+    "arm_id": {
+      "title": "Arm Id",
+      "type": "string"
+    },
+    "ci_high": {
+      "title": "Ci High",
+      "type": "number"
+    },
+    "ci_low": {
+      "title": "Ci Low",
+      "type": "number"
+    },
+    "detail": {
+      "additionalProperties": true,
+      "title": "Detail",
+      "type": "object"
+    },
+    "experiment_id": {
+      "title": "Experiment Id",
+      "type": "string"
+    },
+    "losses": {
+      "title": "Losses",
+      "type": "integer"
+    },
+    "mean_delta": {
+      "title": "Mean Delta",
+      "type": "number"
+    },
+    "n_pairs": {
+      "title": "N Pairs",
+      "type": "integer"
+    },
+    "per_task_deltas": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Per Task Deltas",
+      "type": "object"
+    },
+    "task_set_role": {
+      "$ref": "#/$defs/TaskSetRole"
+    },
+    "ties": {
+      "title": "Ties",
+      "type": "integer"
+    },
+    "wins": {
+      "title": "Wins",
+      "type": "integer"
+    }
+  },
+  "required": [
+    "experiment_id",
+    "arm_id",
+    "task_set_role",
+    "n_pairs",
+    "mean_delta",
+    "ci_low",
+    "ci_high",
+    "wins",
+    "losses",
+    "ties"
+  ],
+  "title": "PairedAnalysis",
+  "type": "object"
+}

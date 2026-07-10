@@ -1,0 +1,35 @@
+{
+  "properties": {
+    "endpoint_policy": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Endpoint Policy"
+    },
+    "model": {
+      "title": "Model",
+      "type": "string"
+    },
+    "provider": {
+      "title": "Provider",
+      "type": "string"
+    },
+    "sampling": {
+      "additionalProperties": true,
+      "title": "Sampling",
+      "type": "object"
+    }
+  },
+  "required": [
+    "provider",
+    "model"
+  ],
+  "title": "ModelRef",
+  "type": "object"
+}

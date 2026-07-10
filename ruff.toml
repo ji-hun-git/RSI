@@ -1,0 +1,12 @@
+# Extends the [tool.ruff] configuration in pyproject.toml.
+#
+# The contracts package is the frozen canonical schema layer and may not be
+# edited in place (report 17.4), so purely stylistic rewrites that ruff
+# would otherwise apply there are suppressed: import re-sorting (I001),
+# datetime.UTC aliasing (UP017), quoted-annotation removal (UP037) and the
+# StrEnum rewrite (UP042), which would also change str() semantics of
+# serialized enum members.
+extend = "pyproject.toml"
+
+[lint.per-file-ignores]
+"src/foundry/contracts/*" = ["I001", "UP017", "UP037", "UP042"]

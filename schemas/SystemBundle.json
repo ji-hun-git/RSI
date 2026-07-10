@@ -1,0 +1,140 @@
+{
+  "$defs": {
+    "PromotionStatus": {
+      "description": "Module/bundle lifecycle statuses (report section 13.6).",
+      "enum": [
+        "draft",
+        "quarantined",
+        "experimental",
+        "shadow",
+        "canary",
+        "scoped_production",
+        "general_production",
+        "deprecated",
+        "revoked"
+      ],
+      "title": "PromotionStatus",
+      "type": "string"
+    },
+    "SignatureRecord": {
+      "properties": {
+        "algorithm": {
+          "default": "hmac-sha256",
+          "title": "Algorithm",
+          "type": "string"
+        },
+        "role": {
+          "default": "author",
+          "title": "Role",
+          "type": "string"
+        },
+        "signature": {
+          "title": "Signature",
+          "type": "string"
+        },
+        "signed_at": {
+          "format": "date-time",
+          "title": "Signed At",
+          "type": "string"
+        },
+        "signer": {
+          "title": "Signer",
+          "type": "string"
+        }
+      },
+      "required": [
+        "signer",
+        "signature"
+      ],
+      "title": "SignatureRecord",
+      "type": "object"
+    }
+  },
+  "description": "Complete frozen configuration of the behavior under test.\n\n``bundle_id`` is derived from the canonical JSON of every identity\nfield (everything except ``bundle_id``, ``signature_set``, ``status``\nand ``created_at``). Two bundles with equal content share an id.",
+  "properties": {
+    "bundle_id": {
+      "default": "",
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "config": {
+      "additionalProperties": true,
+      "title": "Config",
+      "type": "object"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "environment_ref": {
+      "default": "env://local/python",
+      "title": "Environment Ref",
+      "type": "string"
+    },
+    "evaluation_profile_ref": {
+      "default": "eval-profile://default/v1",
+      "title": "Evaluation Profile Ref",
+      "type": "string"
+    },
+    "memory_policy_ref": {
+      "default": "memory-policy://default/v1",
+      "title": "Memory Policy Ref",
+      "type": "string"
+    },
+    "model_policy_ref": {
+      "default": "model-policy://none/deterministic",
+      "title": "Model Policy Ref",
+      "type": "string"
+    },
+    "module_refs": {
+      "additionalProperties": {
+        "type": "string"
+      },
+      "title": "Module Refs",
+      "type": "object"
+    },
+    "parent_bundle_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Bundle Id"
+    },
+    "resource_profile_ref": {
+      "default": "resource-profile://research/v1",
+      "title": "Resource Profile Ref",
+      "type": "string"
+    },
+    "semantic_version": {
+      "default": "0.1.0",
+      "title": "Semantic Version",
+      "type": "string"
+    },
+    "signature_set": {
+      "items": {
+        "$ref": "#/$defs/SignatureRecord"
+      },
+      "title": "Signature Set",
+      "type": "array"
+    },
+    "status": {
+      "$ref": "#/$defs/PromotionStatus",
+      "default": "draft"
+    },
+    "workflow_ref": {
+      "title": "Workflow Ref",
+      "type": "string"
+    }
+  },
+  "required": [
+    "workflow_ref"
+  ],
+  "title": "SystemBundle",
+  "type": "object"
+}

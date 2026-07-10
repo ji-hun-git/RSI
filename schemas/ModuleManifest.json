@@ -1,0 +1,465 @@
+{
+  "$defs": {
+    "ModuleType": {
+      "enum": [
+        "agent",
+        "tool",
+        "skill",
+        "evaluator",
+        "workflow",
+        "service"
+      ],
+      "title": "ModuleType",
+      "type": "string"
+    },
+    "PermissionSpec": {
+      "properties": {
+        "external_side_effects": {
+          "default": false,
+          "title": "External Side Effects",
+          "type": "boolean"
+        },
+        "filesystem_read": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Filesystem Read",
+          "type": "array"
+        },
+        "filesystem_write": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Filesystem Write",
+          "type": "array"
+        },
+        "network_allow": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Network Allow",
+          "type": "array"
+        },
+        "network_mode": {
+          "default": "deny_by_default",
+          "title": "Network Mode",
+          "type": "string"
+        },
+        "permission_inheritance": {
+          "default": "narrower_only",
+          "title": "Permission Inheritance",
+          "type": "string"
+        },
+        "secret_classes": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Secret Classes",
+          "type": "array"
+        }
+      },
+      "title": "PermissionSpec",
+      "type": "object"
+    },
+    "PromotionStatus": {
+      "description": "Module/bundle lifecycle statuses (report section 13.6).",
+      "enum": [
+        "draft",
+        "quarantined",
+        "experimental",
+        "shadow",
+        "canary",
+        "scoped_production",
+        "general_production",
+        "deprecated",
+        "revoked"
+      ],
+      "title": "PromotionStatus",
+      "type": "string"
+    },
+    "ResourceProfile": {
+      "properties": {
+        "max_cost_usd": {
+          "default": 8.0,
+          "title": "Max Cost Usd",
+          "type": "number"
+        },
+        "max_iterations": {
+          "default": 40,
+          "title": "Max Iterations",
+          "type": "integer"
+        },
+        "max_output_tokens": {
+          "default": 24000,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_parallelism": {
+          "default": 1,
+          "title": "Max Parallelism",
+          "type": "integer"
+        },
+        "max_tool_calls": {
+          "default": 120,
+          "title": "Max Tool Calls",
+          "type": "integer"
+        },
+        "max_wall_seconds": {
+          "default": 1800,
+          "title": "Max Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "title": "ResourceProfile",
+      "type": "object"
+    },
+    "RetryPolicy": {
+      "properties": {
+        "max_attempts": {
+          "default": 2,
+          "title": "Max Attempts",
+          "type": "integer"
+        },
+        "retryable_errors": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Retryable Errors",
+          "type": "array"
+        }
+      },
+      "title": "RetryPolicy",
+      "type": "object"
+    },
+    "RiskClass": {
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "critical"
+      ],
+      "title": "RiskClass",
+      "type": "string"
+    },
+    "SecurityClass": {
+      "enum": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted",
+        "secret_reference_only"
+      ],
+      "title": "SecurityClass",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "acceptance_floors": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Acceptance Floors",
+      "type": "object"
+    },
+    "allowed_tools": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Allowed Tools",
+      "type": "array"
+    },
+    "cancellation_supported": {
+      "default": true,
+      "title": "Cancellation Supported",
+      "type": "boolean"
+    },
+    "commit": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Commit"
+    },
+    "conformance_suite": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Conformance Suite",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "data_classes": {
+      "items": {
+        "$ref": "#/$defs/SecurityClass"
+      },
+      "title": "Data Classes",
+      "type": "array"
+    },
+    "environment_ref": {
+      "default": "env://local/python",
+      "title": "Environment Ref",
+      "type": "string"
+    },
+    "error_schema_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Error Schema Ref"
+    },
+    "event_schema_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Event Schema Ref"
+    },
+    "extra": {
+      "additionalProperties": true,
+      "title": "Extra",
+      "type": "object"
+    },
+    "idempotency_key_fields": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Idempotency Key Fields",
+      "type": "array"
+    },
+    "input_schema_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Input Schema Ref"
+    },
+    "known_failure_modes": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Known Failure Modes",
+      "type": "array"
+    },
+    "license": {
+      "default": "MIT",
+      "title": "License",
+      "type": "string"
+    },
+    "memory_read_scope": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Memory Read Scope",
+      "type": "array"
+    },
+    "memory_write_scope": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Memory Write Scope",
+      "type": "array"
+    },
+    "module_dependencies": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Module Dependencies",
+      "type": "array"
+    },
+    "module_id": {
+      "title": "Module Id",
+      "type": "string"
+    },
+    "module_type": {
+      "$ref": "#/$defs/ModuleType"
+    },
+    "non_responsibilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Non Responsibilities",
+      "type": "array"
+    },
+    "output_schema_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Output Schema Ref"
+    },
+    "parent_version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Parent Version"
+    },
+    "permissions": {
+      "$ref": "#/$defs/PermissionSpec"
+    },
+    "postconditions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Postconditions",
+      "type": "array"
+    },
+    "preconditions": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Preconditions",
+      "type": "array"
+    },
+    "publisher": {
+      "default": "org.local.foundry",
+      "title": "Publisher",
+      "type": "string"
+    },
+    "purpose": {
+      "default": "",
+      "title": "Purpose",
+      "type": "string"
+    },
+    "quality_metrics": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Quality Metrics",
+      "type": "array"
+    },
+    "resource_budget": {
+      "$ref": "#/$defs/ResourceProfile"
+    },
+    "responsibilities": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Responsibilities",
+      "type": "array"
+    },
+    "retry_policy": {
+      "$ref": "#/$defs/RetryPolicy"
+    },
+    "risk_class": {
+      "$ref": "#/$defs/RiskClass",
+      "default": "low"
+    },
+    "rollback_target": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rollback Target"
+    },
+    "safety_constraints": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Safety Constraints",
+      "type": "array"
+    },
+    "sandbox_profile": {
+      "default": "sandbox://local/none",
+      "title": "Sandbox Profile",
+      "type": "string"
+    },
+    "sbom_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Sbom Ref"
+    },
+    "signatures": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Signatures",
+      "type": "array"
+    },
+    "source_repo": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Source Repo"
+    },
+    "status": {
+      "$ref": "#/$defs/PromotionStatus",
+      "default": "experimental"
+    },
+    "streaming": {
+      "default": false,
+      "title": "Streaming",
+      "type": "boolean"
+    },
+    "task_tags": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Task Tags",
+      "type": "array"
+    },
+    "version": {
+      "default": "0.1.0",
+      "title": "Version",
+      "type": "string"
+    }
+  },
+  "required": [
+    "module_id",
+    "module_type"
+  ],
+  "title": "ModuleManifest",
+  "type": "object"
+}

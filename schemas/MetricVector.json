@@ -1,0 +1,151 @@
+{
+  "description": "Multi-objective outcome vector for one run or one arm (report 13.2).\n\nHard-constraint dimensions (safety, retention, reproducibility, cost,\nlatency) are checked before any preference optimization; a single\nweighted score is deliberately not provided.",
+  "properties": {
+    "capability_retention": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Capability Retention"
+    },
+    "cost_usd": {
+      "default": 0.0,
+      "title": "Cost Usd",
+      "type": "number"
+    },
+    "extra": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Extra",
+      "type": "object"
+    },
+    "factuality": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Factuality"
+    },
+    "generalization": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Generalization"
+    },
+    "interpretability": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Interpretability"
+    },
+    "latency_p95_ms": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Latency P95 Ms"
+    },
+    "maintainability": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Maintainability"
+    },
+    "reproducibility": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Reproducibility"
+    },
+    "robustness": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Robustness"
+    },
+    "safety_critical_violations": {
+      "default": 0,
+      "title": "Safety Critical Violations",
+      "type": "integer"
+    },
+    "stability": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Stability"
+    },
+    "subgroup_minima": {
+      "additionalProperties": {
+        "type": "number"
+      },
+      "title": "Subgroup Minima",
+      "type": "object"
+    },
+    "task_success": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Task Success"
+    }
+  },
+  "title": "MetricVector",
+  "type": "object"
+}

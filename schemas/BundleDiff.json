@@ -1,0 +1,49 @@
+{
+  "$defs": {
+    "FieldChange": {
+      "properties": {
+        "field_path": {
+          "title": "Field Path",
+          "type": "string"
+        },
+        "new_value": {
+          "default": null,
+          "title": "New Value"
+        },
+        "old_value": {
+          "default": null,
+          "title": "Old Value"
+        }
+      },
+      "required": [
+        "field_path"
+      ],
+      "title": "FieldChange",
+      "type": "object"
+    }
+  },
+  "description": "Machine-readable diff between a parent bundle and a child candidate.",
+  "properties": {
+    "changes": {
+      "items": {
+        "$ref": "#/$defs/FieldChange"
+      },
+      "title": "Changes",
+      "type": "array"
+    },
+    "child_bundle_id": {
+      "title": "Child Bundle Id",
+      "type": "string"
+    },
+    "parent_bundle_id": {
+      "title": "Parent Bundle Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "parent_bundle_id",
+    "child_bundle_id"
+  ],
+  "title": "BundleDiff",
+  "type": "object"
+}

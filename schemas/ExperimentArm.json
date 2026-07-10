@@ -1,0 +1,23 @@
+{
+  "properties": {
+    "arm_id": {
+      "title": "Arm Id",
+      "type": "string"
+    },
+    "bundle_id": {
+      "title": "Bundle Id",
+      "type": "string"
+    },
+    "is_control": {
+      "default": false,
+      "title": "Is Control",
+      "type": "boolean"
+    }
+  },
+  "required": [
+    "arm_id",
+    "bundle_id"
+  ],
+  "title": "ExperimentArm",
+  "type": "object"
+}

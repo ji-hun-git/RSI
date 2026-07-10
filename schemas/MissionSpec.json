@@ -1,0 +1,234 @@
+{
+  "$defs": {
+    "AcceptanceCriterion": {
+      "description": "An acceptance criterion names a deterministic oracle where possible.",
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "oracle": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Oracle"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
+      "title": "AcceptanceCriterion",
+      "type": "object"
+    },
+    "Constraint": {
+      "properties": {
+        "rule_ref": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Rule Ref"
+        },
+        "text": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Text"
+        },
+        "type": {
+          "title": "Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Constraint",
+      "type": "object"
+    },
+    "Objective": {
+      "properties": {
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "priority": {
+          "default": "must",
+          "title": "Priority",
+          "type": "string"
+        },
+        "text": {
+          "title": "Text",
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "text"
+      ],
+      "title": "Objective",
+      "type": "object"
+    },
+    "OperatingProfile": {
+      "description": "Deployment profiles (report section 9.5).",
+      "enum": [
+        "research",
+        "high_reliability",
+        "low_cost",
+        "fast_response",
+        "experimental"
+      ],
+      "title": "OperatingProfile",
+      "type": "string"
+    },
+    "ResourceBudget": {
+      "properties": {
+        "max_cost_usd": {
+          "default": 10.0,
+          "title": "Max Cost Usd",
+          "type": "number"
+        },
+        "max_output_tokens": {
+          "default": 50000,
+          "title": "Max Output Tokens",
+          "type": "integer"
+        },
+        "max_tool_calls": {
+          "default": 200,
+          "title": "Max Tool Calls",
+          "type": "integer"
+        },
+        "max_wall_seconds": {
+          "default": 3600,
+          "title": "Max Wall Seconds",
+          "type": "integer"
+        }
+      },
+      "title": "ResourceBudget",
+      "type": "object"
+    },
+    "RiskClass": {
+      "enum": [
+        "low",
+        "moderate",
+        "high",
+        "critical"
+      ],
+      "title": "RiskClass",
+      "type": "string"
+    }
+  },
+  "properties": {
+    "acceptance_criteria": {
+      "items": {
+        "$ref": "#/$defs/AcceptanceCriterion"
+      },
+      "title": "Acceptance Criteria",
+      "type": "array"
+    },
+    "constraints": {
+      "items": {
+        "$ref": "#/$defs/Constraint"
+      },
+      "title": "Constraints",
+      "type": "array"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "data_policy_ref": {
+      "default": "policy://retention/project-default/v1",
+      "title": "Data Policy Ref",
+      "type": "string"
+    },
+    "human_checkpoints": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Human Checkpoints",
+      "type": "array"
+    },
+    "inputs": {
+      "additionalProperties": true,
+      "title": "Inputs",
+      "type": "object"
+    },
+    "mission_id": {
+      "title": "Mission Id",
+      "type": "string"
+    },
+    "objectives": {
+      "items": {
+        "$ref": "#/$defs/Objective"
+      },
+      "title": "Objectives",
+      "type": "array"
+    },
+    "operating_profile": {
+      "$ref": "#/$defs/OperatingProfile",
+      "default": "research"
+    },
+    "project_id": {
+      "default": "proj_default",
+      "title": "Project Id",
+      "type": "string"
+    },
+    "request_ref": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Request Ref"
+    },
+    "resource_budget": {
+      "$ref": "#/$defs/ResourceBudget"
+    },
+    "risk_class": {
+      "$ref": "#/$defs/RiskClass",
+      "default": "low"
+    },
+    "system_bundle_id": {
+      "title": "System Bundle Id",
+      "type": "string"
+    },
+    "task_type": {
+      "default": "software.fixture",
+      "title": "Task Type",
+      "type": "string"
+    }
+  },
+  "required": [
+    "system_bundle_id"
+  ],
+  "title": "MissionSpec",
+  "type": "object"
+}

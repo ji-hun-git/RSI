@@ -1,0 +1,42 @@
+{
+  "properties": {
+    "request_digest": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Request Digest"
+    },
+    "side_effect_class": {
+      "default": "none",
+      "title": "Side Effect Class",
+      "type": "string"
+    },
+    "tool_id": {
+      "title": "Tool Id",
+      "type": "string"
+    },
+    "version": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Version"
+    }
+  },
+  "required": [
+    "tool_id"
+  ],
+  "title": "ToolRef",
+  "type": "object"
+}

@@ -9,7 +9,8 @@ Stage 1 is complete and green: a single installable package (`agent-foundry`, im
 - Contracts frozen in `src/foundry/contracts/` (bundle, events, mission, improvement, evaluation, governance, memory, manifest, protocols). JSON Schemas exported to `schemas/` via `scripts/export_schemas.py`.
 - Working pipeline: `MissionCompiler` -> `DeterministicRuntime` (plan/execute/verify, ledger-only recovery) -> `ExperimentController` (paired, seeded, blind holdout via `HoldoutVault`) -> `EvaluationHarness` -> `PromotionGate` (G0-G9, fail-closed, signed decisions) -> `DeploymentController` (canary before production, rollback to parent), all over `EventLedger` (SQLite, hash chain, signed tip checkpoint) + `ArtifactStore` + `BundleRegistry` (content-addressed, fork-only mutation) + `PolicyDecisionPoint` (fail-closed, Stage-1 mutation surface = autonomy levels 1-2).
 - CLI `foundry` with four subcommands: `demo` (nine-step story), `verify` (full evidence re-verification incl. independent recomputation of every paired analysis; exit 0/1), `lineage`, `replay` (re-executes a recorded mission and compares output digests; exit 0/1).
-- Docs: `README.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md` (ADR-001..006), `docs/ROADMAP.md`, `research/protocols/STAGE1_PROTOCOL.md`, adapter README stubs under `adapters/`.
+- LangGraph runtime adapter: `foundry.adapters.langgraph_runtime.LangGraphRuntime` (optional dependency group `langgraph`), built on the shared `foundry.runtime.LedgerBackedRuntime` control plane so its canonical event stream is byte-identical to `DeterministicRuntime`'s. `tests/test_runtime_conformance.py` pins every RuntimeAdapter behavior (crash/resume/cancel/duplicate suppression, deterministic reruns, reference equivalence) across all installed runtimes.
+- Docs: `README.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md` (ADR-001..007), `docs/ROADMAP.md`, `research/protocols/STAGE1_PROTOCOL.md`, adapter README stubs under `adapters/`.
 
 ## Where state lives
 
@@ -21,8 +22,8 @@ Stage 1 is complete and green: a single installable package (`agent-foundry`, im
 
 ```bash
 cd C:\Users\Jason\RSI
-pip install -e ".[dev]"
-python -m pytest -q                          # expect: 356 passed
+pip install -e ".[dev,langgraph]"
+python -m pytest -q                          # expect: 378 passed (LangGraph conformance skips without the extra)
 python -m ruff check src tests examples scripts   # expect: All checks passed!
 foundry demo --root .foundry-demo [--seed N]
 foundry verify --root .foundry-demo
@@ -37,11 +38,10 @@ The capstone suite is `tests/test_e2e_replay.py` (15 tests over a session-scoped
 
 ## What to build next (in rough order)
 
-1. **LangGraph RuntimeAdapter** in `adapters/runtimes/langgraph/`, behind the `foundry.runtime.adapter.RuntimeAdapter` protocol (start/resume/cancel/status). Canonical events remain the record; native LangGraph checkpoints stay opaque. Conformance target: the same crash/resume/cancel/duplicate-suppression behavior `tests/test_runtime.py` pins for the deterministic runtime. Optional dependency group `langgraph` already exists in `pyproject.toml`.
-2. **Real coding workers** behind `foundry.contracts.WorkerLike`: OpenHands in `adapters/coding/openhands/`, mini-SWE-agent baseline in `adapters/coding/mini_swe_agent/`. Keep the fixture worker: it stays the conformance and replay baseline.
-3. **Memory service** per report section 11 over the existing `MemoryItem`/`ContextPackage` contracts: staging (candidate writes), quarantine, provenance-required promotion, contradiction links, expiry. Write authority is governed; models only propose.
-4. **GEPA/DSPy proposer adapter** in `adapters/optimizers/gepa_dspy/`: consumes ledger evidence, emits typed `ImprovementProposal` objects with `FieldChange` diffs inside the PDP mutation surface. It gets no promotion authority and no vault access, ever.
-5. Also open (smaller): the 20+ paired-experiment registered campaign from `research/protocols/STAGE1_PROTOCOL.md`, and an automated event-coverage meter for the 95% exit criterion.
+1. **Real coding workers** behind `foundry.contracts.WorkerLike`: OpenHands in `adapters/coding/openhands/`, mini-SWE-agent baseline in `adapters/coding/mini_swe_agent/`. Keep the fixture worker: it stays the conformance and replay baseline.
+2. **Memory service** per report section 11 over the existing `MemoryItem`/`ContextPackage` contracts: staging (candidate writes), quarantine, provenance-required promotion, contradiction links, expiry. Write authority is governed; models only propose.
+3. **GEPA/DSPy proposer adapter** in `adapters/optimizers/gepa_dspy/`: consumes ledger evidence, emits typed `ImprovementProposal` objects with `FieldChange` diffs inside the PDP mutation surface. It gets no promotion authority and no vault access, ever.
+4. Also open (smaller): the 20+ paired-experiment registered campaign from `research/protocols/STAGE1_PROTOCOL.md`, and an automated event-coverage meter for the 95% exit criterion.
 
 ## Governance invariants that must never be weakened
 

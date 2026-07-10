@@ -11,7 +11,7 @@ All runtime code lives in `src/foundry/`:
 - `artifacts/` - content-addressed immutable blob store (`artifact://sha256:<hex>`), digest re-verified on every read
 - `registry/` - signed, content-addressed bundle registry with lineage, machine-readable diffs and `fork` as the only mutation primitive (policy-checked against allowed path prefixes); `HMACSigner` dev signing
 - `compiler/` - `MissionCompiler`: raw request in, immutable `MissionSpec` pinned to exactly one bundle out
-- `runtime/` - the `RuntimeAdapter` protocol plus `DeterministicRuntime`, a no-model plan/execute/verify workflow that keeps zero private state (recovery is ledger-only; duplicate delivery is suppressed as evidence)
+- `runtime/` - the `RuntimeAdapter` protocol, the shared `LedgerBackedRuntime` control plane (start/resume/cancel/status derived purely from the ledger) and `DeterministicRuntime`, a no-model plan/execute/verify workflow that keeps zero private state (recovery is ledger-only; duplicate delivery is suppressed as evidence)
 - `workers/` - `FixtureWorker` (deterministic slugify worker behind `WorkerLike`) and the seeded four-role fixture corpus generator
 - `experiment/` - `ExperimentController` (matched paired design, run, analyze, leakage check), `HoldoutVault` (blind HMAC handles; ground truth never leaves the vault), seeded paired-bootstrap analysis
 - `evaluation/` - deterministic exact-match oracle and the `MetricVector` aggregation harness
@@ -19,12 +19,13 @@ All runtime code lives in `src/foundry/`:
 - `promotion/` - the G0-G9 gates as pure functions and the fail-closed `PromotionGate` runner that signs its decisions
 - `deployment/` - event-sourced `DeploymentController`: canary before scoped production, signed-decision and signed-bundle verification, rollback to the recorded parent
 - `cli.py` - the `foundry` entry point (`demo`, `verify`, `lineage`, `replay`)
+- `adapters/` - optional-dependency framework adapters; currently `langgraph_runtime.LangGraphRuntime` (`pip install -e ".[langgraph]"`), which schedules the same workflow through LangGraph while inheriting the shared control plane, so its canonical event stream is byte-identical to the deterministic runtime's (pinned by `tests/test_runtime_conformance.py`)
 
 ## Quickstart
 
 ```bash
-pip install -e ".[dev]"
-python -m pytest                      # 356 tests
+pip install -e ".[dev,langgraph]"    # drop the langgraph extra for the dependency-free core
+python -m pytest                      # 378 tests (LangGraph conformance skips without the extra)
 foundry demo --root .foundry-demo    # run the complete Stage-1 story
 foundry verify --root .foundry-demo  # re-verify all evidence (exit 0/1)
 foundry lineage --root .foundry-demo # print the bundle tree
@@ -62,11 +63,11 @@ These are report section 8.1 rules implemented as code paths, not conventions, a
 ```
 RSI/
 ├── src/foundry/          # the Stage-1 packages listed above
-├── tests/                # 356 tests, including tests/test_e2e_replay.py (capstone)
+├── tests/                # 378 tests, including tests/test_e2e_replay.py (capstone)
 ├── schemas/              # exported JSON Schemas (scripts/export_schemas.py)
 ├── examples/quickstart.py
 ├── scripts/export_schemas.py
-├── adapters/             # future integrations (empty; README stubs mark the seams)
+├── adapters/             # per-adapter docs; implemented code lives in src/foundry/adapters/
 │   ├── runtimes/langgraph/
 │   ├── coding/{openhands,mini_swe_agent}/
 │   └── optimizers/gepa_dspy/
@@ -82,7 +83,7 @@ RSI/
 
 | Stage | Objective | Status |
 |-------|-----------|--------|
-| 1. Minimal research prototype | One frozen bundle executes reproducibly, emits complete evidence, supports a fair manual candidate comparison | **This repo**: core loop implemented on deterministic fixtures; LangGraph/OpenHands adapters and trace UI still open (see docs/ROADMAP.md) |
+| 1. Minimal research prototype | One frozen bundle executes reproducibly, emits complete evidence, supports a fair manual candidate comparison | **This repo**: core loop implemented on deterministic fixtures; LangGraph adapter done (conformance-pinned); OpenHands/mini-SWE-agent workers and trace UI still open (see docs/ROADMAP.md) |
 | 2. Modular Agent Foundry | Replace agents, workers, tools and memories through stable contracts without corrupting evidence | Not started (the protocol seams exist in `contracts/` and `runtime/adapter.py`) |
 | 3. Bounded self-improvement | Automated proposers (GEPA/DSPy), shadow/canary at scale, autonomy levels 1-2 with lower regression risk than fixed optimization | Not started |
 | 4. Research-grade RSI platform | Longitudinal multi-generation studies, evaluator cross-audit, meta-RSI shadow experiments | Not started |

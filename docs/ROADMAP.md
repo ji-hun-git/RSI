@@ -15,7 +15,7 @@ Core components:
 - [x] Manual experiment runner (paired `ExperimentController`: matched tasks, per-task seeds, equalized budgets, control arm mandatory, blind holdout, leakage check, bootstrap analysis)
 - [x] Rollback to parent (`DeploymentController.rollback`, exercised in the demo and tests)
 - [x] Runtime boundary with crash/resume/cancel/duplicate-suppression conformance (`RuntimeAdapter` protocol; `DeterministicRuntime` reference implementation, ledger-only recovery)
-- [ ] LangGraph adapter (the protocol seam exists at `src/foundry/runtime/adapter.py`; the adapter itself belongs in `adapters/runtimes/langgraph/`)
+- [x] LangGraph adapter (`foundry.adapters.langgraph_runtime.LangGraphRuntime`, optional dependency group `langgraph`; pinned byte-equivalent to the deterministic reference by `tests/test_runtime_conformance.py`)
 - [ ] OpenHands coding worker (seam: `foundry.contracts.WorkerLike`; home: `adapters/coding/openhands/`)
 - [ ] mini-SWE-agent baseline worker (home: `adapters/coding/mini_swe_agent/`)
 - [ ] Basic trace UI (`foundry verify` / `foundry lineage` / `foundry replay` are the current observability surface; no UI)
@@ -28,7 +28,7 @@ Scope constraints honored: local single-machine deployment, human promotion only
 |---|---|
 | At least 95% required event coverage on fixtures | Partially met. The fixture workflow events every lifecycle transition it has (compile, start, per-node start/complete, resume, duplicate suppression, cancel, complete with output digest), and `tests/test_e2e_replay.py` asserts completeness for the demo story. There is no automated coverage meter against the full 15.2 vocabulary yet. |
 | Exact bundle resolution | Met. Bundles are content-addressed, re-verified on load and pinned into every `MissionSpec`; a mission cannot start under a bundle other than the one its spec names. |
-| Crash/replay and duplicate-action tests pass | Met. `tests/test_runtime.py` covers resume-from-ledger, cancel semantics and duplicate suppression; `tests/test_e2e_replay.py` replays recorded missions to identical output digests. |
+| Crash/replay and duplicate-action tests pass | Met. `tests/test_runtime.py` covers resume-from-ledger, cancel semantics and duplicate suppression; `tests/test_runtime_conformance.py` pins the same behavior for every installed runtime adapter (deterministic and LangGraph); `tests/test_e2e_replay.py` replays recorded missions to identical output digests. |
 | 20+ paired candidate/control experiments reproducible | Not met as a recorded research campaign. The infrastructure reproduces any experiment bit-for-bit (`foundry verify` recomputes the paired analysis from seeds and events; the capstone test does it on two seeds), but no registered 20-experiment series has been run and archived. This is the next protocol milestone (see `research/protocols/STAGE1_PROTOCOL.md`). |
 | Rollback restores parent artifact and configuration | Met. Rollback resolves the recorded parent from the ledger projection and restores it as active; the demo asserts S0 is active after rollback. |
 
@@ -65,7 +65,7 @@ Scope constraints honored: local single-machine deployment, human promotion only
 ## First 90-day build sequence (report 19.5)
 
 1. **Weeks 1-2: DONE.** Canonical `MissionSpec`, `SystemBundle` and event schemas frozen (`foundry.contracts`, `schemas/`); fixture-only ledger and bundle resolver implemented (`foundry.ledger`, `foundry.registry`).
-2. **Weeks 3-4: partially done.** The no-model deterministic sample workflow with crash, resume, cancel and duplicate suppression is done (`DeterministicRuntime`); the LangGraph `RuntimeAdapter` is not started.
+2. **Weeks 3-4: DONE.** The no-model deterministic sample workflow with crash, resume, cancel and duplicate suppression is done (`DeterministicRuntime`), and the LangGraph `RuntimeAdapter` (`LangGraphRuntime`) passes the same conformance suite with a byte-identical canonical event stream (`tests/test_runtime_conformance.py`).
 3. **Weeks 5-6: not started.** OpenHands and mini-SWE-agent integration in isolated repositories.
 4. **Weeks 7-8: partially done.** Deterministic test service (oracle/harness), project policy (PDP) and capability issuance exist; a tool-path capability gateway and operator trace/evidence screens do not.
 5. **Weeks 9-10: largely done.** Manual candidate branching (`BundleRegistry.fork`) and matched replay exist; development, retention and adversarial fixtures exist (seeded corpus). Fixtures are generated, not curated task files.

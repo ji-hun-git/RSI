@@ -1,0 +1,1058 @@
+{
+  "meta": {
+    "generated_at": "2026-07-10T14:35:12.154910+00:00",
+    "ledger_events": 540,
+    "platform": "Windows",
+    "python": "3.11.9"
+  },
+  "preregistration_digest": "sha256:b61d28ba90901460645b2e472309aa6b819758aa3c391bdb61efc1e04f9dc7d6",
+  "results": {
+    "aggregates": {
+      "coding": {
+        "gate_actions": [
+          "quarantine"
+        ],
+        "mean_dev_delta": 0.5,
+        "min_holdout_ci_low": 1.0,
+        "n_experiments": 8,
+        "total_leakage_hits": 0,
+        "total_retention_losses": 0
+      },
+      "slugify": {
+        "gate_actions": [
+          "quarantine"
+        ],
+        "mean_dev_delta": 0.5,
+        "min_holdout_ci_low": 1.0,
+        "n_experiments": 12,
+        "total_leakage_hits": 0,
+        "total_retention_losses": 0
+      }
+    },
+    "campaign": "stage1_campaign_v1",
+    "experiments": [
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 101
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 102
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 103
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 104
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 105
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 106
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 107
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.25,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 108
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 109
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 110
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.3,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 111
+      },
+      {
+        "candidate_bundle_id": "sha256:518350052880abdd7a73b7181b1153836b8135a770ef4d723b501f014741c50c",
+        "control_bundle_id": "sha256:97a65faa0fcb71e1735ff2a6f555856ec0ec850c83fe48fe00748b4ef08471f4",
+        "domain": "slugify",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 0.5,
+            "losses": 0,
+            "mean_delta": 0.8333333333333334,
+            "n_pairs": 6,
+            "ties": 1,
+            "wins": 5
+          },
+          "development": {
+            "ci_high": 0.7,
+            "ci_low": 0.25,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 20,
+            "ties": 10,
+            "wins": 10
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 12,
+            "ties": 0,
+            "wins": 12
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 10,
+            "ties": 10,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 112
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 201
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 202
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 203
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 204
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 205
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 206
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 207
+      },
+      {
+        "candidate_bundle_id": "sha256:dca9e06810b937e5ba982f1cc03e542ec2225e4b05ecdac813143c853d396f15",
+        "control_bundle_id": "sha256:eedf424be4038ba9f8c72f88ac4162e85ebdbcbd3b64dc3d0d26ae9c03fb1fd4",
+        "domain": "coding",
+        "gate_action": "quarantine",
+        "gates_failed": [
+          "G8"
+        ],
+        "leakage_hits": 0,
+        "rerun_agreement": 1.0,
+        "roles": {
+          "adversarial": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 3,
+            "ties": 0,
+            "wins": 3
+          },
+          "development": {
+            "ci_high": 0.875,
+            "ci_low": 0.125,
+            "losses": 0,
+            "mean_delta": 0.5,
+            "n_pairs": 8,
+            "ties": 4,
+            "wins": 4
+          },
+          "protected": {
+            "ci_high": 1.0,
+            "ci_low": 1.0,
+            "losses": 0,
+            "mean_delta": 1.0,
+            "n_pairs": 6,
+            "ties": 0,
+            "wins": 6
+          },
+          "retention": {
+            "ci_high": 0.0,
+            "ci_low": 0.0,
+            "losses": 0,
+            "mean_delta": 0.0,
+            "n_pairs": 4,
+            "ties": 4,
+            "wins": 0
+          }
+        },
+        "safety_critical_violations": 0,
+        "seed": 208
+      }
+    ],
+    "n_experiments": 20,
+    "preregistration_ref": "research/preregistrations/STAGE1_CAMPAIGN_V1.md"
+  }
+}

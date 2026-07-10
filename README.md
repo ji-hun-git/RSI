@@ -13,25 +13,26 @@ All runtime code lives in `src/foundry/`:
 - `compiler/` - `MissionCompiler`: raw request in, immutable `MissionSpec` pinned to exactly one bundle out
 - `runtime/` - the `RuntimeAdapter` protocol, the shared `LedgerBackedRuntime` control plane (start/resume/cancel/status derived purely from the ledger) and `DeterministicRuntime`, a no-model plan/execute/verify workflow that keeps zero private state (recovery is ledger-only; duplicate delivery is suppressed as evidence)
 - `workers/` - two no-model domains behind `WorkerLike`: `FixtureWorker` with the seeded slugify corpus, and `DeterministicCodingWorker` with the executable-test coding corpus (tiny buggy repos plus assertion scripts, four roles, `make_coding_run_arm` wiring)
-- `experiment/` - `ExperimentController` (matched paired design, run, analyze, leakage check), `HoldoutVault` (blind HMAC handles; ground truth never leaves the vault), seeded paired-bootstrap analysis
+- `experiment/` - `ExperimentController` (matched paired design, run, analyze, leakage check), `HoldoutVault` (blind HMAC handles; ground truth never leaves the vault), seeded paired-bootstrap analysis, and the registered-campaign runner (`run_campaign`: pre-registered fixed-size series with deterministic archivable payloads; campaign v1 with 20 experiments is archived under `research/`)
 - `evaluation/` - deterministic exact-match oracle, the `MetricVector` aggregation harness, and `DeterministicTestService`: an ephemeral-workspace executable-check runner that force-restores the trusted checks file (a worker that doctors the tests is scored against the originals), emits command receipts and scores untrusted output fail-closed
 - `improvement/` - the improvement loop's front half (report 8.3 steps 1-3): `EvidenceDiagnoser` (strictly read-only failure-signature grouping over ledgered mission evaluations) and the `ProposerLike` seam with `TemplateMutationProposer` as the deterministic reference (governance-supplied mutation table, rejected-diff convergence guard, proposal budgets); proposers hold no registry, vault or approval authority
 - `memory/` - governed memory service (report 11): quarantine-first staged writes, provenance-required promotion with no self-promotion, contradiction links, expiry, filters-before-match retrieval, and a `ContextBuilder` producing cited, token-budgeted `ContextPackage`s; state is an event-sourced projection over the ledger
 - `policy/` - fail-closed `PolicyDecisionPoint` (Stage-1 mutation surface: autonomy levels 1-2 only), capability token issuer
 - `promotion/` - the G0-G9 gates as pure functions and the fail-closed `PromotionGate` runner that signs its decisions
 - `deployment/` - event-sourced `DeploymentController`: canary before scoped production, signed-decision and signed-bundle verification, rollback to the recorded parent
-- `cli.py` - the `foundry` entry point (`demo`, `verify`, `lineage`, `replay`)
+- `cli.py` - the `foundry` entry point (`demo`, `verify`, `lineage`, `replay`, `coverage`)
 - `adapters/` - optional-dependency framework adapters: `langgraph_runtime.LangGraphRuntime` (`.[langgraph]`), which schedules the same workflow through LangGraph with a byte-identical canonical event stream (pinned by `tests/test_runtime_conformance.py`), and `openai_proposer.OpenAIReflectiveProposer` (`.[openai]`), the first model-backed `ProposerLike`: model output is validated fail-closed (out-of-surface paths and out-of-domain values dropped, old values read from the frozen bundle, rejected-diff and budget rules enforced) and every API call is ledgered as MODEL_REQUEST/MODEL_RESPONSE evidence with digests and token usage; the API key lives in the environment only
 
 ## Quickstart
 
 ```bash
 pip install -e ".[dev,langgraph]"    # drop the langgraph extra for the dependency-free core
-python -m pytest                      # 440 tests (LangGraph conformance and the live OpenAI test skip without extra/key)
+python -m pytest                      # 452 tests (LangGraph conformance and the live OpenAI test skip without extra/key)
 foundry demo --root .foundry-demo    # run the complete Stage-1 story
 foundry verify --root .foundry-demo  # re-verify all evidence (exit 0/1)
 foundry lineage --root .foundry-demo # print the bundle tree
 foundry replay --root .foundry-demo --mission <mission_id>   # exit 0/1
+foundry coverage --root .foundry-demo # event-coverage audit vs the 95% exit criterion
 ```
 
 The demo prints the mission ids to use with `replay`. `examples/quickstart.py` is a compact, commented walkthrough of the same pipeline, and `examples/coding_experiment.py` runs the paired experiment on the executable-test coding domain.
@@ -65,7 +66,7 @@ These are report section 8.1 rules implemented as code paths, not conventions, a
 ```
 RSI/
 ├── src/foundry/          # the Stage-1 packages listed above
-├── tests/                # 440 tests, including tests/test_e2e_replay.py (capstone)
+├── tests/                # 452 tests, including tests/test_e2e_replay.py (capstone)
 ├── schemas/              # exported JSON Schemas (scripts/export_schemas.py)
 ├── examples/quickstart.py
 ├── scripts/export_schemas.py

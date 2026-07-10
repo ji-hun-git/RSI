@@ -784,6 +784,40 @@ def print_lineage(root: Path, out: Printer = print) -> None:
         stores.close()
 
 
+# -- coverage ----------------------------------------------------------------------
+
+
+def report_coverage(root: Path, out: Printer = print) -> bool:
+    """Event-coverage audit for the 95% exit criterion (report 19.1).
+
+    Measures the persisted ledger against the demo-required vocabulary
+    (a state root holds demo-shaped evidence; the interruption vocabulary
+    is exercised and pinned by the fixture test suite instead). True iff
+    the coverage ratio meets the exit-criterion threshold.
+    """
+    from foundry.evaluation.coverage import (
+        DEMO_REQUIRED_EVENTS,
+        EXIT_CRITERION_THRESHOLD,
+        measure_coverage,
+    )
+
+    stores = open_stores(root, create=False)
+    try:
+        report = measure_coverage(stores.ledger, DEMO_REQUIRED_EVENTS)
+    finally:
+        stores.close()
+    out(
+        f"required event types: {len(report.required)}; observed of required: "
+        f"{len(report.required) - len(report.missing)}; coverage {report.ratio:.0%} "
+        f"(threshold {EXIT_CRITERION_THRESHOLD:.0%})"
+    )
+    for missing in report.missing:
+        out(f"MISSING {missing}")
+    verdict = report.passed()
+    out(("PASS" if verdict else "FAIL") + " event coverage")
+    return verdict
+
+
 # -- replay ------------------------------------------------------------------------
 
 
@@ -847,6 +881,11 @@ def main(argv: list[str] | None = None) -> int:
     replay_parser.add_argument("--root", type=Path, required=True, help="state directory")
     replay_parser.add_argument("--mission", required=True, help="mission id to replay")
 
+    coverage_parser = subparsers.add_parser(
+        "coverage", help="event-coverage audit against the required Stage-1 vocabulary"
+    )
+    coverage_parser.add_argument("--root", type=Path, required=True, help="state directory")
+
     args = parser.parse_args(argv)
     if args.command == "demo":
         run_demo(args.root, seed=args.seed)
@@ -856,6 +895,8 @@ def main(argv: list[str] | None = None) -> int:
     if args.command == "lineage":
         print_lineage(args.root)
         return 0
+    if args.command == "coverage":
+        return 0 if report_coverage(args.root) else 1
     return 0 if replay_mission(args.root, args.mission) else 1
 
 

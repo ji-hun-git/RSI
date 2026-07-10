@@ -27,10 +27,10 @@ Scope constraints honored: local single-machine deployment, human promotion only
 
 | Exit criterion | Status |
 |---|---|
-| At least 95% required event coverage on fixtures | Partially met. The fixture workflow events every lifecycle transition it has (compile, start, per-node start/complete, resume, duplicate suppression, cancel, complete with output digest), and `tests/test_e2e_replay.py` asserts completeness for the demo story. There is no automated coverage meter against the full 15.2 vocabulary yet. |
+| At least 95% required event coverage on fixtures | Met. `foundry.evaluation.coverage` measures coverage against declared vocabularies; `foundry coverage --root` audits a state root (demo roots score 100%), and the fixture suite pins the interruption vocabulary (resume, duplicate suppression, node failure, cancel) on top (ADR-012). |
 | Exact bundle resolution | Met. Bundles are content-addressed, re-verified on load and pinned into every `MissionSpec`; a mission cannot start under a bundle other than the one its spec names. |
 | Crash/replay and duplicate-action tests pass | Met. `tests/test_runtime.py` covers resume-from-ledger, cancel semantics and duplicate suppression; `tests/test_runtime_conformance.py` pins the same behavior for every installed runtime adapter (deterministic and LangGraph); `tests/test_e2e_replay.py` replays recorded missions to identical output digests. |
-| 20+ paired candidate/control experiments reproducible | Not met as a recorded research campaign. The infrastructure reproduces any experiment bit-for-bit (`foundry verify` recomputes the paired analysis from seeds and events; the capstone test does it on two seeds), but no registered 20-experiment series has been run and archived. This is the next protocol milestone (see `research/protocols/STAGE1_PROTOCOL.md`). |
+| 20+ paired candidate/control experiments reproducible | Met. Registered campaign v1 (pre-registered in `research/preregistrations/STAGE1_CAMPAIGN_V1.md`, 12 slugify + 8 coding experiments) is archived under `research/analyses/` and `research/reports/` with its full hash-chained event log; all six pre-registered predictions held, and CI recomputes sample rows bit-for-bit from the registered seeds (ADR-012, `tests/test_campaign.py`). |
 | Rollback restores parent artifact and configuration | Met. Rollback resolves the recorded parent from the ledger projection and restores it as active; the demo asserts S0 is active after rollback. |
 
 ## Stage 2: Modular Agent Foundry (report 19.2)

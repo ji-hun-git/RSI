@@ -21,13 +21,13 @@ All runtime code lives in `src/foundry/`:
 - `promotion/` - the G0-G9 gates as pure functions and the fail-closed `PromotionGate` runner that signs its decisions
 - `deployment/` - event-sourced `DeploymentController`: canary before scoped production, signed-decision and signed-bundle verification, rollback to the recorded parent
 - `cli.py` - the `foundry` entry point (`demo`, `verify`, `lineage`, `replay`)
-- `adapters/` - optional-dependency framework adapters; currently `langgraph_runtime.LangGraphRuntime` (`pip install -e ".[langgraph]"`), which schedules the same workflow through LangGraph while inheriting the shared control plane, so its canonical event stream is byte-identical to the deterministic runtime's (pinned by `tests/test_runtime_conformance.py`)
+- `adapters/` - optional-dependency framework adapters: `langgraph_runtime.LangGraphRuntime` (`.[langgraph]`), which schedules the same workflow through LangGraph with a byte-identical canonical event stream (pinned by `tests/test_runtime_conformance.py`), and `openai_proposer.OpenAIReflectiveProposer` (`.[openai]`), the first model-backed `ProposerLike`: model output is validated fail-closed (out-of-surface paths and out-of-domain values dropped, old values read from the frozen bundle, rejected-diff and budget rules enforced) and every API call is ledgered as MODEL_REQUEST/MODEL_RESPONSE evidence with digests and token usage; the API key lives in the environment only
 
 ## Quickstart
 
 ```bash
 pip install -e ".[dev,langgraph]"    # drop the langgraph extra for the dependency-free core
-python -m pytest                      # 425 tests (LangGraph conformance skips without the extra)
+python -m pytest                      # 440 tests (LangGraph conformance and the live OpenAI test skip without extra/key)
 foundry demo --root .foundry-demo    # run the complete Stage-1 story
 foundry verify --root .foundry-demo  # re-verify all evidence (exit 0/1)
 foundry lineage --root .foundry-demo # print the bundle tree
@@ -65,7 +65,7 @@ These are report section 8.1 rules implemented as code paths, not conventions, a
 ```
 RSI/
 ├── src/foundry/          # the Stage-1 packages listed above
-├── tests/                # 425 tests, including tests/test_e2e_replay.py (capstone)
+├── tests/                # 440 tests, including tests/test_e2e_replay.py (capstone)
 ├── schemas/              # exported JSON Schemas (scripts/export_schemas.py)
 ├── examples/quickstart.py
 ├── scripts/export_schemas.py

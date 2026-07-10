@@ -1,4 +1,4 @@
-# gepa_dspy proposer adapter (not yet implemented; seam ready)
+# gepa_dspy proposer adapter (seam filled by the OpenAI reflective proposer; library wrappers open)
 
 Home of the GEPA/DSPy proposal adapter. The seam it must implement now exists and has a deterministic reference implementation:
 
@@ -7,4 +7,4 @@ Home of the GEPA/DSPy proposal adapter. The seam it must implement now exists an
 - Honor the report 12.5 stopping rule the same way the reference does: a diff matching `constraints.rejected_diffs` may only be re-emitted with new evidence ids (`foundry.improvement.diff_digest` computes the diff identity).
 - Authority boundary (report 12, 14.1): the adapter receives no registry write handle, no vault access (`holdout.read` is PDP-denied to optimizer principals) and no approval power. Its output is data; forking, experiments, gates and approvals all happen downstream. GEPA/DSPy may read development-set traces for reflective mutation but never protected holdout contents.
 
-Blockers, stated honestly: GEPA/DSPy proposal generation needs an LLM provider key. The wiring (diagnosis evidence in, typed proposals out, full loop to canary) is already exercised model-free end-to-end in `tests/test_improvement_loop.py`.
+Status: `foundry.adapters.openai_proposer.OpenAIReflectiveProposer` (optional dependency group `openai`) is the first model-backed implementation of this seam, with fail-closed output validation (out-of-surface paths and out-of-domain `value_domains` values dropped, old values read from the frozen bundle) and MODEL_REQUEST/MODEL_RESPONSE ledger evidence per call (ADR-011). The full live loop has run under complete governance. GEPA/DSPy library wrappers (evolutionary search, program compilation) remain open behind the identical protocol for when candidate search beyond single reflective proposals is wanted.

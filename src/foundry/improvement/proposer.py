@@ -68,7 +68,13 @@ class RejectedDiff:
 
 @dataclass(frozen=True)
 class ProposalConstraints:
-    """The box a proposer works inside; set by governance, not by the proposer."""
+    """The box a proposer works inside; set by governance, not by the proposer.
+
+    ``value_domains`` declares the legal values for closed-domain config
+    fields (e.g. ``{"/config/strategy": ("naive", "robust")}``). A proposer
+    must not emit a value outside a declared domain; fields without a
+    declared domain are open (free-text prompts and similar).
+    """
 
     allowed_path_prefixes: tuple[str, ...]
     max_autonomy_level: AutonomyLevel = AutonomyLevel.PROMPT_SKILL_ROUTING
@@ -79,6 +85,7 @@ class ProposalConstraints:
     experiment_plan_ref: str = "artifact://plan/template-mutation-v1"
     rejected_diffs: tuple[RejectedDiff, ...] = ()
     min_failure_rate: float = 0.25
+    value_domains: dict[str, tuple[Any, ...]] = field(default_factory=dict)
 
 
 @runtime_checkable
@@ -95,7 +102,8 @@ class ProposerLike(Protocol):
     ) -> list[ImprovementProposal]: ...
 
 
-def _path_within(field_path: str, prefixes: tuple[str, ...]) -> bool:
+def path_within(field_path: str, prefixes: tuple[str, ...]) -> bool:
+    """True when *field_path* sits inside one of the allowed prefixes (segment-aware)."""
     return any(
         field_path == prefix or field_path.startswith(prefix.rstrip("/") + "/")
         for prefix in prefixes
@@ -125,7 +133,7 @@ class TemplateMutationProposer:
         constraints: ProposalConstraints,
     ) -> list[ImprovementProposal]:
         for path in self.mutation_table:
-            if not _path_within(path, constraints.allowed_path_prefixes):
+            if not path_within(path, constraints.allowed_path_prefixes):
                 raise ProposalPolicyViolation(
                     f"mutation table targets {path!r}, outside the allowed "
                     f"surface {list(constraints.allowed_path_prefixes)}"

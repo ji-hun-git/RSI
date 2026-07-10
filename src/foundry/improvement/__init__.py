@@ -20,6 +20,7 @@ from .proposer import (
     RejectedDiff,
     TemplateMutationProposer,
     diff_digest,
+    path_within,
 )
 
 __all__ = [
@@ -32,5 +33,6 @@ __all__ = [
     "RejectedDiff",
     "TemplateMutationProposer",
     "diff_digest",
+    "path_within",
     "record_mission_evaluation",
 ]

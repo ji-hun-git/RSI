@@ -48,7 +48,7 @@ Scope constraints honored: local single-machine deployment, human promotion only
 ## Stage 3: Bounded self-improvement (report 19.3)
 
 - [x] Diagnosers over mission cohorts (`foundry.improvement.EvidenceDiagnoser`: read-only failure-signature grouping with support minimum and frozen-config attribution; causal accuracy remains open research, RQ1)
-- [ ] GEPA/DSPy proposal adapter (`adapters/optimizers/gepa_dspy/`; the `ProposerLike` seam, `ProposalConstraints` and the `TemplateMutationProposer` typed-mutation reference exist and carry the full loop model-free, ADR-010; the model-backed adapter is blocked on an LLM key)
+- [x] Model-backed proposal adapter (`foundry.adapters.openai_proposer.OpenAIReflectiveProposer`, optional group `openai`: fail-closed output validation, value domains, ledgered model evidence, live loop run under full governance, ADR-011; GEPA/DSPy library wrappers for evolutionary candidate search remain open behind the same `ProposerLike` seam)
 - [ ] Experiment scheduler with search-budget accounting
 - [ ] Blind holdout service with rotation (Stage 1 has the in-process vault)
 - [ ] Retention and adversarial suites at scale

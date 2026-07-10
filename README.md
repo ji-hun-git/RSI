@@ -12,9 +12,9 @@ All runtime code lives in `src/foundry/`:
 - `registry/` - signed, content-addressed bundle registry with lineage, machine-readable diffs and `fork` as the only mutation primitive (policy-checked against allowed path prefixes); `HMACSigner` dev signing
 - `compiler/` - `MissionCompiler`: raw request in, immutable `MissionSpec` pinned to exactly one bundle out
 - `runtime/` - the `RuntimeAdapter` protocol, the shared `LedgerBackedRuntime` control plane (start/resume/cancel/status derived purely from the ledger) and `DeterministicRuntime`, a no-model plan/execute/verify workflow that keeps zero private state (recovery is ledger-only; duplicate delivery is suppressed as evidence)
-- `workers/` - `FixtureWorker` (deterministic slugify worker behind `WorkerLike`) and the seeded four-role fixture corpus generator
+- `workers/` - two no-model domains behind `WorkerLike`: `FixtureWorker` with the seeded slugify corpus, and `DeterministicCodingWorker` with the executable-test coding corpus (tiny buggy repos plus assertion scripts, four roles, `make_coding_run_arm` wiring)
 - `experiment/` - `ExperimentController` (matched paired design, run, analyze, leakage check), `HoldoutVault` (blind HMAC handles; ground truth never leaves the vault), seeded paired-bootstrap analysis
-- `evaluation/` - deterministic exact-match oracle and the `MetricVector` aggregation harness
+- `evaluation/` - deterministic exact-match oracle, the `MetricVector` aggregation harness, and `DeterministicTestService`: an ephemeral-workspace executable-check runner that force-restores the trusted checks file (a worker that doctors the tests is scored against the originals), emits command receipts and scores untrusted output fail-closed
 - `policy/` - fail-closed `PolicyDecisionPoint` (Stage-1 mutation surface: autonomy levels 1-2 only), capability token issuer
 - `promotion/` - the G0-G9 gates as pure functions and the fail-closed `PromotionGate` runner that signs its decisions
 - `deployment/` - event-sourced `DeploymentController`: canary before scoped production, signed-decision and signed-bundle verification, rollback to the recorded parent
@@ -25,14 +25,14 @@ All runtime code lives in `src/foundry/`:
 
 ```bash
 pip install -e ".[dev,langgraph]"    # drop the langgraph extra for the dependency-free core
-python -m pytest                      # 378 tests (LangGraph conformance skips without the extra)
+python -m pytest                      # 396 tests (LangGraph conformance skips without the extra)
 foundry demo --root .foundry-demo    # run the complete Stage-1 story
 foundry verify --root .foundry-demo  # re-verify all evidence (exit 0/1)
 foundry lineage --root .foundry-demo # print the bundle tree
 foundry replay --root .foundry-demo --mission <mission_id>   # exit 0/1
 ```
 
-The demo prints the mission ids to use with `replay`. `examples/quickstart.py` is a compact, commented walkthrough of the same pipeline.
+The demo prints the mission ids to use with `replay`. `examples/quickstart.py` is a compact, commented walkthrough of the same pipeline, and `examples/coding_experiment.py` runs the paired experiment on the executable-test coding domain.
 
 ## The demo storyline
 
@@ -63,7 +63,7 @@ These are report section 8.1 rules implemented as code paths, not conventions, a
 ```
 RSI/
 ├── src/foundry/          # the Stage-1 packages listed above
-├── tests/                # 378 tests, including tests/test_e2e_replay.py (capstone)
+├── tests/                # 396 tests, including tests/test_e2e_replay.py (capstone)
 ├── schemas/              # exported JSON Schemas (scripts/export_schemas.py)
 ├── examples/quickstart.py
 ├── scripts/export_schemas.py

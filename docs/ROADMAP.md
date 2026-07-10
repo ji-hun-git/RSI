@@ -12,12 +12,13 @@ Core components:
 - [x] Event ledger (SQLite, append-only, hash-chained, signed tip checkpoint, JSONL export/import)
 - [x] Object store (content-addressed `ArtifactStore`, digest re-verified on read)
 - [x] Deterministic tests (exact-match oracle; fixture corpus with development/protected/retention/adversarial roles)
+- [x] Executable-test coding domain (`generate_coding_task_sets`, `DeterministicCodingWorker`, `DeterministicTestService` with trusted-checks restore, command receipts, fail-closed scoring; report 10.2, 14.2, 14.4, 18.3)
 - [x] Manual experiment runner (paired `ExperimentController`: matched tasks, per-task seeds, equalized budgets, control arm mandatory, blind holdout, leakage check, bootstrap analysis)
 - [x] Rollback to parent (`DeploymentController.rollback`, exercised in the demo and tests)
 - [x] Runtime boundary with crash/resume/cancel/duplicate-suppression conformance (`RuntimeAdapter` protocol; `DeterministicRuntime` reference implementation, ledger-only recovery)
 - [x] LangGraph adapter (`foundry.adapters.langgraph_runtime.LangGraphRuntime`, optional dependency group `langgraph`; pinned byte-equivalent to the deterministic reference by `tests/test_runtime_conformance.py`)
-- [ ] OpenHands coding worker (seam: `foundry.contracts.WorkerLike`; home: `adapters/coding/openhands/`)
-- [ ] mini-SWE-agent baseline worker (home: `adapters/coding/mini_swe_agent/`)
+- [ ] OpenHands coding worker (seam: `foundry.contracts.WorkerLike` + `make_coding_run_arm`, fully specified by the coding domain; blocked on LLM keys and a real sandbox behind `run_checks`, see ADR-008 and `adapters/coding/openhands/README.md`)
+- [ ] mini-SWE-agent baseline worker (same seam and blockers; also needs a POSIX shell, `adapters/coding/mini_swe_agent/README.md`)
 - [ ] Basic trace UI (`foundry verify` / `foundry lineage` / `foundry replay` are the current observability surface; no UI)
 
 Scope constraints honored: local single-machine deployment, human promotion only (level-2 changes require a non-proposer A1 approval; the PDP's level 3+ mutation surface is empty).
@@ -66,7 +67,7 @@ Scope constraints honored: local single-machine deployment, human promotion only
 
 1. **Weeks 1-2: DONE.** Canonical `MissionSpec`, `SystemBundle` and event schemas frozen (`foundry.contracts`, `schemas/`); fixture-only ledger and bundle resolver implemented (`foundry.ledger`, `foundry.registry`).
 2. **Weeks 3-4: DONE.** The no-model deterministic sample workflow with crash, resume, cancel and duplicate suppression is done (`DeterministicRuntime`), and the LangGraph `RuntimeAdapter` (`LangGraphRuntime`) passes the same conformance suite with a byte-identical canonical event stream (`tests/test_runtime_conformance.py`).
-3. **Weeks 5-6: not started.** OpenHands and mini-SWE-agent integration in isolated repositories.
+3. **Weeks 5-6: substrate done, agents blocked.** The coding-task domain with executable-test oracles, trusted-checks restore, command receipts and fail-closed scoring exists and carries full paired experiments (`tests/test_coding_domain.py`); the OpenHands/mini-SWE-agent integrations themselves are blocked on LLM keys plus a real sandbox behind the same `run_checks` interface (ADR-008).
 4. **Weeks 7-8: partially done.** Deterministic test service (oracle/harness), project policy (PDP) and capability issuance exist; a tool-path capability gateway and operator trace/evidence screens do not.
 5. **Weeks 9-10: largely done.** Manual candidate branching (`BundleRegistry.fork`) and matched replay exist; development, retention and adversarial fixtures exist (seeded corpus). Fixtures are generated, not curated task files.
 6. **Weeks 11-12: partially done.** The demo is a pilot experiment, `foundry verify` is the evidence-completeness audit, and `research/protocols/STAGE1_PROTOCOL.md` is the internal protocol; the 20+ experiment campaign and failure report remain open.

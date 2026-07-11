@@ -25,7 +25,7 @@ from .conformance import (
     ToolConformanceHarness,
 )
 from .context import ContextualWorker, ToolContext
-from .egress import EgressDecision, EgressPolicy
+from .egress import EgressDecision, EgressPolicy, system_resolver
 from .gateway import (
     ToolDenied,
     ToolExecutionError,
@@ -70,5 +70,6 @@ __all__ = [
     "ToolProvider",
     "ToolReceipt",
     "ToolResult",
+    "system_resolver",
     "tool_manifest",
 ]

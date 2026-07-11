@@ -20,19 +20,21 @@ All runtime code lives in `src/foundry/`:
 - `policy/` - fail-closed `PolicyDecisionPoint` (Stage-1 mutation surface: autonomy levels 1-2 only), capability token issuer
 - `promotion/` - the G0-G9 gates as pure functions and the fail-closed `PromotionGate` runner that signs its decisions
 - `deployment/` - event-sourced `DeploymentController`: canary before scoped production, signed-decision and signed-bundle verification, rollback to the recorded parent
-- `cli.py` - the `foundry` entry point (`demo`, `verify`, `lineage`, `replay`, `coverage`)
+- `dashboard/` - a read-only, self-contained HTML trace/governance/evolution view (report 15.3/15.6): `build_dashboard_model` projects the ledger and registry into a frozen model, `render_html` turns it into one offline page (inline CSS, no scripts, no external fetches). Built to report 15.4's line between useful and harmful observability: every experiment delta keeps its confidence interval, quarantined and rolled-back branches are never omitted, each decision shows the exact diff and all G0-G9 gate results, dynamic text is escaped and secret-redacted, and the header states the exact evidence snapshot
+- `cli.py` - the `foundry` entry point (`demo`, `verify`, `lineage`, `replay`, `coverage`, `dashboard`)
 - `adapters/` - optional-dependency framework adapters: `langgraph_runtime.LangGraphRuntime` (`.[langgraph]`), which schedules the same workflow through LangGraph with a byte-identical canonical event stream (pinned by `tests/test_runtime_conformance.py`), and `openai_proposer.OpenAIReflectiveProposer` (`.[openai]`), the first model-backed `ProposerLike`: model output is validated fail-closed (out-of-surface paths and out-of-domain values dropped, old values read from the frozen bundle, rejected-diff and budget rules enforced) and every API call is ledgered as MODEL_REQUEST/MODEL_RESPONSE evidence with digests and token usage; the API key lives in the environment only
 
 ## Quickstart
 
 ```bash
 pip install -e ".[dev,langgraph]"    # drop the langgraph extra for the dependency-free core
-python -m pytest                      # 452 tests (LangGraph conformance and the live OpenAI test skip without extra/key)
+python -m pytest                      # 474 tests (LangGraph conformance and the live OpenAI test skip without extra/key)
 foundry demo --root .foundry-demo    # run the complete Stage-1 story
 foundry verify --root .foundry-demo  # re-verify all evidence (exit 0/1)
 foundry lineage --root .foundry-demo # print the bundle tree
 foundry replay --root .foundry-demo --mission <mission_id>   # exit 0/1
 foundry coverage --root .foundry-demo # event-coverage audit vs the 95% exit criterion
+foundry dashboard --root .foundry-demo # write a self-contained HTML trace/governance dashboard
 ```
 
 The demo prints the mission ids to use with `replay`. `examples/quickstart.py` is a compact, commented walkthrough of the same pipeline, and `examples/coding_experiment.py` runs the paired experiment on the executable-test coding domain.
@@ -66,7 +68,7 @@ These are report section 8.1 rules implemented as code paths, not conventions, a
 ```
 RSI/
 ├── src/foundry/          # the Stage-1 packages listed above
-├── tests/                # 452 tests, including tests/test_e2e_replay.py (capstone)
+├── tests/                # 474 tests, including tests/test_e2e_replay.py (capstone)
 ├── schemas/              # exported JSON Schemas (scripts/export_schemas.py)
 ├── examples/quickstart.py
 ├── scripts/export_schemas.py

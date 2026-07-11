@@ -19,7 +19,9 @@ Core components:
 - [x] LangGraph adapter (`foundry.adapters.langgraph_runtime.LangGraphRuntime`, optional dependency group `langgraph`; pinned byte-equivalent to the deterministic reference by `tests/test_runtime_conformance.py`)
 - [ ] OpenHands coding worker (seam: `foundry.contracts.WorkerLike` + `make_coding_run_arm`, fully specified by the coding domain; blocked on LLM keys and a real sandbox behind `run_checks`, see ADR-008 and `adapters/coding/openhands/README.md`)
 - [ ] mini-SWE-agent baseline worker (same seam and blockers; also needs a POSIX shell, `adapters/coding/mini_swe_agent/README.md`)
-- [ ] Basic trace UI (`foundry verify` / `foundry lineage` / `foundry replay` are the current observability surface; no UI)
+- [x] Basic trace UI (`foundry.dashboard` + `foundry dashboard --root DIR`: a self-contained HTML trace/lineage/governance/evolution view, read-only projection over the ledger, built to report 15.4's useful-not-harmful spec; ADR-013)
+
+With the trace UI complete, every report 19.1 Stage-1 exit criterion and core-component item is now met.
 
 Scope constraints honored: local single-machine deployment, human promotion only (level-2 changes require a non-proposer A1 approval; the PDP's level 3+ mutation surface is empty).
 

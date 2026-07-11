@@ -818,6 +818,41 @@ def report_coverage(root: Path, out: Printer = print) -> bool:
     return verdict
 
 
+# -- dashboard ---------------------------------------------------------------------
+
+
+def write_dashboard(root: Path, out_path: Path, printer: Printer = print) -> Path:
+    """Render the read-only HTML dashboard for *root* to *out_path* (report 15.3).
+
+    Opens the stores read-only (never mints a key, never writes evidence) and
+    projects the ledger and registry into a self-contained HTML page. The page
+    states its own evidence snapshot (event count and ledger tip digest), shows
+    every gate result and the exact diff behind each decision, keeps confidence
+    intervals on every experiment delta, and never omits a quarantined or
+    rolled-back branch (report 15.4).
+    """
+    from foundry.contracts import utcnow
+    from foundry.dashboard import build_dashboard_model, render_html
+
+    stores = open_stores(root, create=False)
+    try:
+        artifact_count = len(_artifact_blobs(stores.root / ARTIFACTS_DIR))
+        model = build_dashboard_model(
+            stores.ledger,
+            stores.registry,
+            root_name=root.name or str(root),
+            artifact_count=artifact_count,
+        )
+    finally:
+        stores.close()
+    html = render_html(model, generated_at=utcnow().isoformat())
+    out_path.write_text(html, encoding="utf-8", newline="\n")
+    printer(f"dashboard written to {out_path} ({len(html)} bytes, {model.evidence.event_count} events)")
+    if not model.evidence.chain_ok:
+        printer("WARNING: ledger chain did not verify; the dashboard flags this in its header")
+    return out_path
+
+
 # -- replay ------------------------------------------------------------------------
 
 
@@ -886,6 +921,14 @@ def main(argv: list[str] | None = None) -> int:
     )
     coverage_parser.add_argument("--root", type=Path, required=True, help="state directory")
 
+    dashboard_parser = subparsers.add_parser(
+        "dashboard", help="render the read-only HTML trace/governance dashboard"
+    )
+    dashboard_parser.add_argument("--root", type=Path, required=True, help="state directory")
+    dashboard_parser.add_argument(
+        "--out", type=Path, default=None, help="output HTML path (default: <root>/dashboard.html)"
+    )
+
     args = parser.parse_args(argv)
     if args.command == "demo":
         run_demo(args.root, seed=args.seed)
@@ -897,6 +940,10 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.command == "coverage":
         return 0 if report_coverage(args.root) else 1
+    if args.command == "dashboard":
+        out_path = args.out if args.out is not None else args.root / "dashboard.html"
+        write_dashboard(args.root, out_path)
+        return 0
     return 0 if replay_mission(args.root, args.mission) else 1
 
 

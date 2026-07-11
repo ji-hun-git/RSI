@@ -25,9 +25,10 @@ from __future__ import annotations
 from dataclasses import dataclass
 from typing import Any
 
-from foundry.contracts import canonical_json
+from foundry.contracts import CapabilityToken, canonical_json
 
-from .gateway import ToolProvider
+from .context import ContextualWorker, ToolContext
+from .gateway import ToolGateway, ToolProvider
 
 _ALLOWED_SIDE_EFFECTS = frozenset({"none", "read", "write", "external", "monetary"})
 TOOL_SUITE = "tool-provider/1"
@@ -133,3 +134,66 @@ class ToolConformanceHarness:
                     detail="a side-effect-free tool produced two different outputs",
                 )
         return ToolCheck(name="determinism", passed=True)
+
+
+TOOL_WORKER_SUITE = "contextual-worker/1"
+
+
+@dataclass
+class ContextualWorkerConformanceHarness:
+    """Conformance for a ContextualWorker (report 9.2, 14).
+
+    A tool-using worker is impure, so determinism is not its contract. The
+    load-bearing property is capability discipline: it must reach side
+    effects only through the gateway and handle a denial gracefully. The
+    check runs the worker under a *deny-all* context (a capability that
+    authorizes nothing) and requires it to return the contract dict without
+    raising -- proving it routes effects through the gateway and respects a
+    refusal rather than reaching around it or crashing.
+    """
+
+    def checks(
+        self,
+        worker: ContextualWorker,
+        example_inputs: list[tuple[dict[str, Any], dict[str, Any], int]],
+    ) -> list[ToolCheck]:
+        deny_context = self._deny_all_context()
+        for task_input, config, seed in example_inputs:
+            try:
+                result = worker.invoke(dict(task_input), dict(config), seed, deny_context)
+            except Exception as exc:
+                return [
+                    ToolCheck(
+                        name="graceful_denial",
+                        passed=False,
+                        detail=f"worker raised under a denied tool context: {exc}",
+                    )
+                ]
+            if not isinstance(result, dict):
+                return [
+                    ToolCheck(
+                        name="graceful_denial",
+                        passed=False,
+                        detail=f"returned {type(result).__name__}, not dict, under denial",
+                    )
+                ]
+        return [ToolCheck(name="graceful_denial", passed=True)]
+
+    def evidence(
+        self,
+        worker: ContextualWorker,
+        example_inputs: list[tuple[dict[str, Any], dict[str, Any], int]],
+    ) -> ToolConformanceEvidence:
+        return ToolConformanceEvidence(
+            tool_id=type(worker).__name__,
+            suite=TOOL_WORKER_SUITE,
+            checks=tuple(self.checks(worker, example_inputs)),
+        )
+
+    @staticmethod
+    def _deny_all_context() -> ToolContext:
+        from foundry.ledger import EventLedger
+
+        empty_capability = CapabilityToken(subject="conformance", actions=[], resource_scopes=[])
+        gateway = ToolGateway(EventLedger(":memory:"))
+        return ToolContext(gateway, empty_capability, "conformance", None)

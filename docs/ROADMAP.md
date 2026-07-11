@@ -43,7 +43,7 @@ Scope constraints honored: local single-machine deployment, human promotion only
 - [x] Capability gateway on the tool path (`foundry.tools.ToolGateway`: capability-bound, deny-by-default, discovery-not-authorization, SSRF/egress blocking, per-call ledger receipts, untrusted output, output-size cap, authorization-checked idempotent replay; ADR-016)
 - [ ] Memory staging, typed layers and provenance/deletion tests (`foundry.memory.MemoryService` implements staging/quarantine, provenance-required promotion, contradiction, expiry and filtered retrieval as an event-sourced projection, ADR-009; `MemoryConsolidator` is the deterministic 11.5 producer that stages recurring-pattern claims and negative lessons from mission episodes, ADR-014; the privacy deletion/redaction workflow and model-assisted extraction remain open)
 - [x] Context builder producing `ContextPackage` (`foundry.memory.ContextBuilder`: cited evidence, warnings for contradicted/expired items, explicit token budget with omitted-item count, retrieval trace, MEMORY_SHOWN events)
-- [ ] PydanticAI worker adapter, MCP tool adapter
+- [~] Tool-using workers under governance (`foundry.tools.ContextualWorker` + `ToolAugmentedRuntime` runs a tool-using worker with a least-privilege per-mission capability; every tool call authorized + receipted in the mission ledger; ADR-019). PydanticAI worker adapter and a real MCP tool adapter behind the gateway remain open.
 - [ ] Signed bundle supply chain (Cosign/SBOM grade; Stage 1 has HMAC dev signing)
 - [ ] Lineage and experiment dashboard
 

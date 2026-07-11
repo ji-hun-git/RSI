@@ -68,3 +68,29 @@ def tool_manifest(tool_id: str, version: str = "1.0.0", **extra: Any) -> ModuleM
     return ModuleManifest(
         module_id=tool_id, module_type=ModuleType.TOOL, version=version, **extra
     )
+
+
+class SlugifyConfirmWorker:
+    """A demo ContextualWorker: slugify, then confirm via a governed tool call.
+
+    If the echo tool is authorized, the confirmed slug comes back through the
+    gateway (a receipted call); if the call is denied, the worker degrades to
+    the local slug -- respecting governance rather than reaching around it.
+    """
+
+    def invoke(
+        self, task_input: dict[str, Any], config: dict[str, Any], seed: int, tools: Any
+    ) -> dict[str, Any]:
+        from foundry.workers import robust_slugify
+
+        from .gateway import ToolDenied
+
+        slug = robust_slugify(task_input["text"])
+        try:
+            result = tools.call("echo", {"slug": slug}, action="tool.echo")
+            confirmed = result.output["echo"]["slug"]
+            confirmed_via = "tool"
+        except ToolDenied:
+            confirmed = slug
+            confirmed_via = "local"
+        return {"output": confirmed, "confirmed_via": confirmed_via}

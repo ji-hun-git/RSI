@@ -16,7 +16,8 @@ Stage 1 is complete and green: a single installable package (`agent-foundry`, im
 - Model-backed proposer: `foundry.adapters.openai_proposer.OpenAIReflectiveProposer` (optional group `openai`, lazy import, injectable client for offline tests). Model output validated fail-closed (out-of-surface dropped, out-of-domain values for `ProposalConstraints.value_domains` dropped, old values from the frozen bundle, rejected-diff + budget rules); every API call ledgered as MODEL_REQUEST/MODEL_RESPONSE with digests and usage, event ids joined to proposal evidence. Key from environment ONLY (never code/events/logs); live test skips without it. The full live loop (model proposal -> experiment -> gate) has been run: quarantine without approval, model self-approval rejected, canary with human A1. ADR-011; `tests/test_openai_proposer.py`.
 - Registered campaign v1 (report 19.1 "20+ experiments" exit criterion): pre-registration `research/preregistrations/STAGE1_CAMPAIGN_V1.md`, runner `foundry.experiment.campaign` (deterministic payload), archive `research/analyses/stage1_campaign_v1.json` + `_events.jsonl` + `research/reports/STAGE1_CAMPAIGN_V1.md`; all six predictions held (20x quarantine: evidence passes, authority absent); CI recomputes sample rows bit-for-bit and pins the prereg digest. Event-coverage meter `foundry.evaluation.coverage` + `foundry coverage --root` (95% threshold). ADR-012.
 - Trace UI (report 15.3/15.6, last open 19.1 item): `foundry.dashboard` (`build_dashboard_model` read-only projection + `render_html` self-contained HTML) and `foundry dashboard --root DIR`. Built to report 15.4: CIs on every delta, failed/quarantined/rolled-back branches never omitted, exact diff + all G0-G9 gate results on every decision, escaped + secret-redacted, evidence snapshot in the header. `tests/test_dashboard.py`; ADR-013. ALL report 19.1 Stage-1 exit criteria now met.
-- Docs: `README.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md` (ADR-001..014), `docs/ROADMAP.md`, `research/protocols/STAGE1_PROTOCOL.md`, adapter README stubs under `adapters/`.
+- Module conformance / hot-swap (report 17.2/17.3, first Stage-2 spine): `foundry.modules` = `WorkerConformanceHarness` (determinism/statelessness/output-shape), `ModuleRegistry` (conformance-gated admission, optionally signed evidence, version-immutable, resolves `module_refs`), `check_replacement` (17.3 shadow execution: drop-in vs behavior-change). Seeded incompatibilities (nondeterministic/stateful/wrong-shape/crashing) detected+refused. In-process runtime registry (not serialized); runtime not yet rewired to resolve through it; full 3-worker/2-tool bar + tool-provider suite open. `tests/test_modules.py`; ADR-015.
+- Docs: `README.md`, `docs/ARCHITECTURE.md`, `docs/DECISIONS.md` (ADR-001..015), `docs/ROADMAP.md`, `research/protocols/STAGE1_PROTOCOL.md`, adapter README stubs under `adapters/`.
 
 ## Where state lives
 
@@ -29,7 +30,7 @@ Stage 1 is complete and green: a single installable package (`agent-foundry`, im
 ```bash
 cd C:\Users\Jason\RSI
 pip install -e ".[dev,langgraph]"
-python -m pytest -q                          # expect: 484 passed; LangGraph conformance and the live OpenAI test skip without the extra / OPENAI_API_KEY
+python -m pytest -q                          # expect: 498 passed; LangGraph conformance and the live OpenAI test skip without the extra / OPENAI_API_KEY
 python -m ruff check src tests examples scripts   # expect: All checks passed!
 foundry demo --root .foundry-demo [--seed N]
 foundry verify --root .foundry-demo
@@ -44,7 +45,7 @@ The capstone suite is `tests/test_e2e_replay.py` (15 tests over a session-scoped
 
 ## What to build next (in rough order)
 
-1. **GEPA/DSPy library adapters** in `adapters/optimizers/gepa_dspy/` (optional, when evolutionary search over candidates is wanted): same `ProposerLike` seam the OpenAI reflective proposer already fills; no promotion authority, no vault access, ever.
+1. **Stage-2 continuation**: capability gateway on the tool path (report 10.2/14.3; `CapabilityToken` + PDP exist), a tool-provider conformance suite + wiring the runtime to resolve `module_refs` through `ModuleRegistry`, PydanticAI/MCP adapters, and signed bundle supply chain (Cosign/SBOM grade). Also open: GEPA/DSPy library adapters behind the filled `ProposerLike` seam.
 2. **Memory extensions** (smaller): consolidation is done (`MemoryConsolidator`, ADR-014); still open are model-assisted extraction staging through `MemoryService.stage`, vector/graph projections rebuilt from ledger events, and the privacy deletion/redaction workflow (15.5).
 3. Also open (Stage 2+, per report 19.2/15.3): richer dashboard views (a live Evidence Inspector over `ContextBuilder`, an Artifact Workshop over repository diffs) and a Phoenix/MLflow trace-workbench integration, behind the same read-only projection boundary. All Stage-1 19.1 exit criteria are met.
 4. **Real coding agents (OpenHands, mini-SWE-agent)**: seam fully specified by the coding domain (`WorkerLike` + `make_coding_run_arm` + `DeterministicTestService`), but BLOCKED on LLM keys and a real sandbox behind `run_checks` (ADR-008; adapter READMEs state the contract and blockers). Do not run model-generated code under the local-subprocess test service.

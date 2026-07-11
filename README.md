@@ -17,6 +17,7 @@ All runtime code lives in `src/foundry/`:
 - `evaluation/` - deterministic exact-match oracle, the `MetricVector` aggregation harness, and `DeterministicTestService`: an ephemeral-workspace executable-check runner that force-restores the trusted checks file (a worker that doctors the tests is scored against the originals), emits command receipts and scores untrusted output fail-closed
 - `improvement/` - the improvement loop's front half (report 8.3 steps 1-3): `EvidenceDiagnoser` (strictly read-only failure-signature grouping over ledgered mission evaluations) and the `ProposerLike` seam with `TemplateMutationProposer` as the deterministic reference (governance-supplied mutation table, rejected-diff convergence guard, proposal budgets); proposers hold no registry, vault or approval authority
 - `memory/` - governed memory service (report 11): quarantine-first staged writes, provenance-required promotion with no self-promotion, contradiction links, expiry, filters-before-match retrieval, a `ContextBuilder` producing cited, token-budgeted `ContextPackage`s, and `MemoryConsolidator` (report 11.5): a deterministic, model-free producer that clusters recurring mission episodes into candidate semantic claims and negative lessons, requires recurrence and a disconfirming-episode search before staging, and only ever stages (never promotes); state is an event-sourced projection over the ledger
+- `modules/` - the module conformance and hot-swap layer (report 17.2/17.3, "the conformance suite is part of the connector"): `WorkerConformanceHarness` (determinism/statelessness/output-shape checks), `ModuleRegistry` (admits a module only with passing, optionally signed conformance evidence; version-immutable; resolves a bundle's declared `module_refs` slot), and `check_replacement` (report 17.3 shadow execution: a swap is compatible only when the new module reproduces the old byte-for-byte, and a behavior change is reported case-by-case, never coerced)
 - `policy/` - fail-closed `PolicyDecisionPoint` (Stage-1 mutation surface: autonomy levels 1-2 only), capability token issuer
 - `promotion/` - the G0-G9 gates as pure functions and the fail-closed `PromotionGate` runner that signs its decisions
 - `deployment/` - event-sourced `DeploymentController`: canary before scoped production, signed-decision and signed-bundle verification, rollback to the recorded parent
@@ -28,7 +29,7 @@ All runtime code lives in `src/foundry/`:
 
 ```bash
 pip install -e ".[dev,langgraph]"    # drop the langgraph extra for the dependency-free core
-python -m pytest                      # 484 tests (LangGraph conformance and the live OpenAI test skip without extra/key)
+python -m pytest                      # 498 tests (LangGraph conformance and the live OpenAI test skip without extra/key)
 foundry demo --root .foundry-demo    # run the complete Stage-1 story
 foundry verify --root .foundry-demo  # re-verify all evidence (exit 0/1)
 foundry lineage --root .foundry-demo # print the bundle tree
@@ -68,7 +69,7 @@ These are report section 8.1 rules implemented as code paths, not conventions, a
 ```
 RSI/
 ├── src/foundry/          # the Stage-1 packages listed above
-├── tests/                # 484 tests, including tests/test_e2e_replay.py (capstone)
+├── tests/                # 498 tests, including tests/test_e2e_replay.py (capstone)
 ├── schemas/              # exported JSON Schemas (scripts/export_schemas.py)
 ├── examples/quickstart.py
 ├── scripts/export_schemas.py

@@ -37,9 +37,9 @@ Scope constraints honored: local single-machine deployment, human promotion only
 
 ## Stage 2: Modular Agent Foundry (report 19.2)
 
-- [ ] Universal module manifest enforcement (the `ModuleManifest` contract exists; registry-side conformance evidence does not)
-- [ ] Conformance SDK and seeded-incompatibility detection
-- [ ] Module registry with hot-swap tests (3+ worker modules, 2+ tool providers)
+- [x] Universal module manifest enforcement (`foundry.modules.ModuleRegistry` admits a module only with passing, optionally signed conformance evidence bound to the manifest digest; version immutability enforced; ADR-015)
+- [x] Conformance SDK and seeded-incompatibility detection (`WorkerConformanceHarness`: determinism / statelessness / output-shape / declared-input checks; nondeterministic, stateful, wrong-shape and crashing workers are detected and refused; `tests/test_modules.py`)
+- [~] Module registry with hot-swap tests: the registry and the report 17.3 shadow-execution replacement check (`check_replacement`) exist and distinguish a drop-in from a behavior change; the full 3-worker/2-tool-provider bar and a tool-provider conformance suite remain open (ADR-015)
 - [ ] Capability gateway on the tool path
 - [ ] Memory staging, typed layers and provenance/deletion tests (`foundry.memory.MemoryService` implements staging/quarantine, provenance-required promotion, contradiction, expiry and filtered retrieval as an event-sourced projection, ADR-009; `MemoryConsolidator` is the deterministic 11.5 producer that stages recurring-pattern claims and negative lessons from mission episodes, ADR-014; the privacy deletion/redaction workflow and model-assisted extraction remain open)
 - [x] Context builder producing `ContextPackage` (`foundry.memory.ContextBuilder`: cited evidence, warnings for contradicted/expired items, explicit token budget with omitted-item count, retrieval trace, MEMORY_SHOWN events)

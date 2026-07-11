@@ -18,6 +18,7 @@ from .conformance import (
     WorkerConformanceHarness,
 )
 from .registry import ModuleConformanceError, ModuleRegistry, RegisteredModule
+from .runtime import ModuleResolvingRuntime
 from .swap import Divergence, ReplacementReport, check_replacement, resolve_worker
 
 __all__ = [
@@ -29,6 +30,7 @@ __all__ = [
     "Divergence",
     "ModuleConformanceError",
     "ModuleRegistry",
+    "ModuleResolvingRuntime",
     "RegisteredModule",
     "ReplacementReport",
     "WorkerConformanceHarness",

@@ -3,6 +3,11 @@ promotion, contradiction, expiry, filtered retrieval and context building
 (report section 11). State is an event-sourced projection over the ledger.
 """
 
+from .consolidation import (
+    CandidatePattern,
+    ConsolidationReport,
+    MemoryConsolidator,
+)
 from .context_builder import ContextBuilder
 from .service import (
     GOVERNED_TYPES,
@@ -17,7 +22,10 @@ from .service import (
 __all__ = [
     "GOVERNED_TYPES",
     "PROMOTABLE_STATUSES",
+    "CandidatePattern",
+    "ConsolidationReport",
     "ContextBuilder",
+    "MemoryConsolidator",
     "MemoryGovernanceError",
     "MemoryRecord",
     "MemoryService",

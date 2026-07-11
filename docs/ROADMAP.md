@@ -41,7 +41,7 @@ Scope constraints honored: local single-machine deployment, human promotion only
 - [ ] Conformance SDK and seeded-incompatibility detection
 - [ ] Module registry with hot-swap tests (3+ worker modules, 2+ tool providers)
 - [ ] Capability gateway on the tool path
-- [ ] Memory staging, typed layers and provenance/deletion tests (`foundry.memory.MemoryService` implements staging/quarantine, provenance-required promotion, contradiction, expiry and filtered retrieval as an event-sourced projection, ADR-009; the privacy deletion/redaction workflow and model-assisted extraction pipelines remain open)
+- [ ] Memory staging, typed layers and provenance/deletion tests (`foundry.memory.MemoryService` implements staging/quarantine, provenance-required promotion, contradiction, expiry and filtered retrieval as an event-sourced projection, ADR-009; `MemoryConsolidator` is the deterministic 11.5 producer that stages recurring-pattern claims and negative lessons from mission episodes, ADR-014; the privacy deletion/redaction workflow and model-assisted extraction remain open)
 - [x] Context builder producing `ContextPackage` (`foundry.memory.ContextBuilder`: cited evidence, warnings for contradicted/expired items, explicit token budget with omitted-item count, retrieval trace, MEMORY_SHOWN events)
 - [ ] PydanticAI worker adapter, MCP tool adapter
 - [ ] Signed bundle supply chain (Cosign/SBOM grade; Stage 1 has HMAC dev signing)

@@ -12,6 +12,13 @@ the effect twice.
     from foundry.tools import ToolGateway, EgressPolicy
 """
 
+from .conformance import (
+    TOOL_SUITE,
+    ToolCheck,
+    ToolConformanceError,
+    ToolConformanceEvidence,
+    ToolConformanceHarness,
+)
 from .egress import EgressDecision, EgressPolicy
 from .gateway import (
     ToolDenied,
@@ -31,12 +38,17 @@ from .providers import (
 )
 
 __all__ = [
+    "TOOL_SUITE",
     "AppendLogTool",
     "EchoTool",
     "EgressDecision",
     "EgressPolicy",
     "FetchTool",
     "OversizeTool",
+    "ToolCheck",
+    "ToolConformanceError",
+    "ToolConformanceEvidence",
+    "ToolConformanceHarness",
     "ToolDenied",
     "ToolExecutionError",
     "ToolGateway",

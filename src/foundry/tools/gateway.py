@@ -166,6 +166,7 @@ class ToolGateway:
         self._max_output_bytes = max_output_bytes
         self._tools: dict[str, _Registered] = {}
         self._idempotency: dict[str, ToolResult] = {}
+        self._tool_evidence: dict[str, Any] = {}
 
     # -- discovery (separate from authorization) ------------------------------
 
@@ -180,6 +181,34 @@ class ToolGateway:
                 payload={"tool_id": provider.tool_id, "version": manifest.version},
             )
         )
+
+    def register_conformant(
+        self,
+        manifest: ModuleManifest,
+        provider: ToolProvider,
+        *,
+        example_args: list[dict[str, Any]],
+        harness: Any = None,
+    ) -> Any:
+        """Admit a tool only after it passes the tool-provider conformance
+        suite (report 17.2/17.3). Refuses a non-conformant tool with the
+        failing checks named; returns the conformance evidence on success."""
+        from .conformance import ToolConformanceError, ToolConformanceHarness
+
+        harness = harness or ToolConformanceHarness()
+        evidence = harness.evidence(provider, example_args)
+        if not evidence.passed:
+            failed = ", ".join(c.name for c in evidence.checks if not c.passed)
+            raise ToolConformanceError(
+                f"tool {provider.tool_id} failed conformance ({failed}); refused admission"
+            )
+        self.register(manifest, provider)
+        self._tool_evidence[provider.tool_id] = evidence
+        return evidence
+
+    def tool_evidence(self, tool_id: str) -> Any:
+        """The conformance evidence recorded when a tool was admitted, if any."""
+        return self._tool_evidence.get(tool_id)
 
     def list_tools(self) -> list[str]:
         return sorted(self._tools)

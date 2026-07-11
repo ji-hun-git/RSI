@@ -51,7 +51,7 @@ Scope constraints honored: local single-machine deployment, human promotion only
 
 - [x] Diagnosers over mission cohorts (`foundry.improvement.EvidenceDiagnoser`: read-only failure-signature grouping with support minimum and frozen-config attribution; causal accuracy remains open research, RQ1)
 - [x] Model-backed proposal adapter (`foundry.adapters.openai_proposer.OpenAIReflectiveProposer`, optional group `openai`: fail-closed output validation, value domains, ledgered model evidence, live loop run under full governance, ADR-011; GEPA/DSPy library wrappers for evolutionary candidate search remain open behind the same `ProposerLike` seam)
-- [ ] Experiment scheduler with search-budget accounting
+- [x] Experiment scheduler with search-budget accounting (`foundry.improvement.SearchController`: budget-governed search over the diagnose/propose/experiment/gate loop with the report 12.5 stopping conditions -- acceptance, cost/candidate/iteration exhaustion, rejected-diff convergence, no-effect-floor -- and a full-cost `SearchReport`; ADR-021)
 - [ ] Blind holdout service with rotation (Stage 1 has the in-process vault)
 - [ ] Retention and adversarial suites at scale
 - [ ] Shadow/canary deployment with automatic (trigger-driven) rollback in production traffic

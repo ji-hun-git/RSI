@@ -22,15 +22,25 @@ from .proposer import (
     diff_digest,
     path_within,
 )
+from .search import (
+    CandidateOutcome,
+    SearchBudget,
+    SearchController,
+    SearchReport,
+)
 
 __all__ = [
     "DIAGNOSER_REF",
+    "CandidateOutcome",
     "Diagnosis",
     "EvidenceDiagnoser",
     "ProposalConstraints",
     "ProposalPolicyViolation",
     "ProposerLike",
     "RejectedDiff",
+    "SearchBudget",
+    "SearchController",
+    "SearchReport",
     "TemplateMutationProposer",
     "diff_digest",
     "path_within",
